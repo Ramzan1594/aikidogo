@@ -1,0 +1,80 @@
+{
+  "participants": [
+    {
+      "id": "a131b88c-69db-4293-82d3-b5a4285adf6d",
+      "nom": "Jack",
+      "prenom": "Portier",
+      "tel": "teltest",
+      "mail": "emailtest",
+      "clubName": "clubAA",
+      "type": "NORMAL"
+    }
+  ],
+  "inscriptions": [
+    {
+      "participant": {
+        "id": "a131b88c-69db-4293-82d3-b5a4285adf6d",
+        "nom": "Jack",
+        "prenom": "Portier",
+        "tel": "teltest",
+        "mail": "emailtest",
+        "clubName": "clubAA",
+        "type": "NORMAL"
+      },
+      "plages": [
+        {
+          "nom": "Samedi matin 1",
+          "jour": "Samedi",
+          "heureDebut": "9:00",
+          "heureFin": "10:30",
+          "animateur": {
+            "id": "a131b88c-69db-4293-82d3-b5a4285adf6d",
+            "nom": "Jack",
+            "prenom": "Portier",
+            "tel": "teltest",
+            "mail": "emailtest",
+            "clubName": "clubAA",
+            "type": "NORMAL"
+          }
+        }
+      ],
+      "souper": true,
+      "logement": false
+    }
+  ],
+  "plages": [
+    {
+      "nom": "Samedi matin 1",
+      "jour": "Samedi",
+      "heureDebut": "9:00",
+      "heureFin": "10:30",
+      "animateur": {
+        "id": "a131b88c-69db-4293-82d3-b5a4285adf6d",
+        "nom": "Jack",
+        "prenom": "Portier",
+        "tel": "teltest",
+        "mail": "emailtest",
+        "clubName": "clubAA",
+        "type": "NORMAL"
+      }
+    },
+    {
+      "nom": "Samedi matin 2",
+      "jour": "Samedi",
+      "heureDebut": "10:30",
+      "heureFin": "12:00"
+    },
+    {
+      "nom": "Samedi aprem 1",
+      "jour": "Samedi",
+      "heureDebut": "12:30",
+      "heureFin": "13:30"
+    }
+  ],
+  "tarif": {
+    "pPlage": 10.0,
+    "pSouper": 5.0,
+    "pLogement": 10.0,
+    "pFullPlages": 60.0
+  }
+}
