@@ -1,12 +1,11 @@
 package be.technifutur.Storage;
 
-import be.technifutur.Design;
+import be.technifutur.Dsg;
 import be.technifutur.Model.StageData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 //READ AND WRITE DES FILES
@@ -32,7 +31,7 @@ public class DataStorage {
             FileWriter writer = new FileWriter(file);
             json.toJson(obj, writer);
             //System.out.printf("\n%s saved to JSON in %s\n",obj.getClass().getSimpleName(),file.getPath());
-            System.out.printf(Design.ANSI_RED+"✅ DATA ENREGISTRER DANS %s"+Design.ANSI_RESET,file.getPath());
+            System.out.printf(Dsg.re +"✅ DATA ENREGISTRER DANS %s"+ Dsg.r,file.getPath());
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,7 +51,7 @@ public class DataStorage {
         File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
 
         if (files == null || files.length == 0) {
-            System.out.print(Design.ANSI_RED+"❌ AUNCUN FICHIER TROUVE !"+Design.ANSI_RESET);
+            System.out.print(Dsg.re +"❌ AUNCUN FICHIER TROUVE !"+ Dsg.r);
             data = new StageData();
 //            return;
         }
@@ -70,7 +69,7 @@ public class DataStorage {
 
         if (choix == 0) {
             data = new StageData();
-            System.out.print(Design.ANSI_RED+"✅ NOUVEAU STAGE CREE."+Design.ANSI_RESET);
+            System.out.print(Dsg.re +"✅ NOUVEAU STAGE CREE."+ Dsg.r);
 //            return;
         }
 
@@ -83,10 +82,10 @@ public class DataStorage {
         try (FileReader reader = new FileReader(files[choix - 1].getPath())) {
             data = json.fromJson(reader, StageData.class);
         } catch (IOException e) {
-            System.out.print(Design.ANSI_RED+"❌ FICHIER NON TROUVE, UN NOUVEAU SERA CREE"+Design.ANSI_RESET);
+            System.out.print(Dsg.re +"❌ FICHIER NON TROUVE, UN NOUVEAU SERA CREE"+ Dsg.r);
         }
 
-        System.out.printf(Design.ANSI_RED+"✅ FICHIER CHARGE : %s"+Design.ANSI_RESET , files[choix - 1].getName());
+        System.out.printf(Dsg.re +"✅ FICHIER CHARGE : %s"+ Dsg.r, files[choix - 1].getName());
 
         return data;
 

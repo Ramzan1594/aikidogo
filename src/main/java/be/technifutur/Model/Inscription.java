@@ -38,14 +38,15 @@ public class Inscription  implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(participant.toString());
-        sb.append(" || ");
+        sb.append("     🍔Souper :");
+        sb.append(isSouper() ? "✅":"❌");
+        sb.append("   🏦Logement :");
+        sb.append(isLogement() ? "✅":"❌");
+
+        sb.append("    ➖   🕛 ");
         for(Plage p : plages) {
             sb.append(p.toString());
         }
-        sb.append(" || Souper : ");
-        sb.append(isSouper() ? "oui":"non");
-        sb.append("- Logement : ");
-        sb.append(isLogement() ? "oui":"non");
 
         return sb.toString();
     }

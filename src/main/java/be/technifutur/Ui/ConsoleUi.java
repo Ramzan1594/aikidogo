@@ -1,11 +1,10 @@
 package be.technifutur.Ui;
 
-import be.technifutur.Design;
+import be.technifutur.Dsg;
 import be.technifutur.Model.*;
 import be.technifutur.Service.StageService;
 import be.technifutur.Storage.DataStorage;
 
-import java.io.File;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,47 +24,65 @@ public class ConsoleUi {
         boolean running = true;
 
         while (running) {
-            System.out.println(Design.ANSI_PURPLE+"\n========================================\n" +
-                                                  "============ MENU AIKIDOGO ============="+Design.ANSI_RESET);
-            System.out.println(Design.ANSI_RED+"0. Quitter"+Design.ANSI_RESET);
-            System.out.println(Design.ANSI_GREEN+"1. Charger fichier");
-            System.out.println("2. ENREGISTRE LES DONNEES"+Design.ANSI_RESET);
+//            System.out.println(Design.ANSI_PURPLE+"\n========================================\n" +
+//                                                  "============ MENU AIKIDOGO ============="+Design.ANSI_RESET);
+//            System.out.println(Design.ANSI_RED+"0. Quitter"+Design.ANSI_RESET);
+//            System.out.println(Design.ANSI_GREEN+"1. Charger fichier");
+//            System.out.println("2. ENREGISTRE LES DONNEES"+Design.ANSI_RESET);
+//
+//            System.out.println("----------------------------------------\n3. Définir les tarifs");
+//            System.out.println("4. Ajouter un participant");
+//            System.out.println("5. Créer une plage");
+//            System.out.println("6. Inscrire un participant à une plage");
+//            System.out.println("7. Affecter un animateur à une plage");
+//            System.out.println("8. Afficher participants et inscriptions");
+//            System.out.println("9. Calculer le prix d'un participant");
+//            System.out.println("10.Voir les tarifs");
+//            System.out.println(Design.ANSI_PURPLE+"========================================"+Design.ANSI_RESET);
+            System.out.println(Dsg.pu +"\n┌────────────────────────────────────────┐\n" +
+                                         "│============  MENU AIKIDOGO  ===========│"+ Dsg.r);
+            System.out.println(Dsg.pu+"├────────────────────────────────────────┤"+Dsg.r);
+            System.out.println(Dsg.pu+"│"+ Dsg.re +"0. Quitter"+ Dsg.pu +"                              │");
+            System.out.println("│"+ Dsg.gr +"1. Charger fichier"+ Dsg.pu+"                      │");
+            System.out.println("│"+ Dsg.gr +"2. ENREGISTRE LES DONNEES"+ Dsg.pu +"               │");
+            System.out.println("├────────────────────────────────────────┤");
 
-            System.out.println("----------------------------------------\n3. Définir les tarifs");
-            System.out.println("4. Ajouter un participant");
-            System.out.println("5. Créer une plage");
-            System.out.println("6. Inscrire un participant à une plage");
-            System.out.println("7. Affecter un animateur à une plage");
-            System.out.println("8. Afficher participants et inscriptions");
-            System.out.println("9. Calculer le prix d'un participant");
-            System.out.println("10.Voir les tarifs");
-            System.out.println(Design.ANSI_PURPLE+"========================================"+Design.ANSI_RESET);
-
+            System.out.println("│"+Dsg.wh+"3. Définir les tarifs"+ Dsg.pu+"                   │");
+            System.out.println("│"+Dsg.wh+"4. Ajouter un participant"+ Dsg.pu+"               │");
+            System.out.println("│"+ Dsg.wh +"5. Créer une plage"+ Dsg.pu+"                      │");
+            System.out.println("│"+ Dsg.wh +"6. Inscrire un participant à une plage"+ Dsg.pu+"  │");
+            System.out.println("│"+ Dsg.wh +"7. Affecter un animateur à une plage"+ Dsg.pu+"    │");
+            System.out.println("├────────────────────────────────────────┤");
+            System.out.println("│"+ Dsg.wh +"c. Calculer le prix d'un participant"+ Dsg.pu+"    │");
+            System.out.println("│"+ Dsg.wh +"a. Afficher participants et inscriptions"+ Dsg.pu+"│");
+            System.out.println("│"+ Dsg.wh +"t. Voir les tarifs"+ Dsg.pu+"                      │");
+            System.out.println(Dsg.pu +"└────────────────────────────────────────┘"+ Dsg.r);
 
             System.out.print("Choix : ");
-            int choix = scanner.nextInt();
-            scanner.nextLine(); // vider le buffer
+            String choix = scanner.nextLine();
+//            scanner.nextLine();
 
             switch (choix) {
-                case 1 -> loadFile();
-                case 2 -> saveStageData();
-                case 0 -> running = false;
+                case "0" -> running = false;
+                case "1" -> loadFile();
+                case "2" -> saveStageData();
 
-                case 3 -> definirTarif();
-                case 4 -> ajouterParticipant();
-                case 5 -> creerPlage();
-                case 6 -> inscrireParticipant();
-                case 7 -> affecterAnimateur();
-                case 8 -> afficherInscriptions();
-                case 9 -> calculerPrix();
-                case 10 -> afficherTarif();
-                default -> System.out.println(Design.ANSI_RED+"❌ CHOIX INVALIDE !"+Design.ANSI_RESET);
+                case "3" -> definirTarif();
+                case "4" -> ajouterParticipant();
+                case "5" -> creerPlage();
+                case "6" -> inscrireParticipant();
+                case "7" -> affecterAnimateur();
+
+                case "c" -> calculerPrix();
+                case "a" -> afficherInscriptions();
+                case "t" -> afficherTarif();
+                default -> System.out.println(Dsg.re +"❌ CHOIX INVALIDE !"+ Dsg.r);
             }
-
         }
     }
 
     private void loadFile() {
+        System.out.println("testy");
         data = DataStorage.load();
     }
 
@@ -95,12 +112,12 @@ public class ConsoleUi {
         Tarif tarif = new Tarif(prixPlage, prixSouper, prixLogement, prixFull);
         data.setTarif(tarif);
 
-        System.out.print(Design.ANSI_RED+"✅ TARIFS ENREGISTREES !"+Design.ANSI_RESET);
+        System.out.print(Dsg.re +"✅ TARIFS ENREGISTREES !"+ Dsg.r);
     }
 
     private void afficherTarif() {
         if (data.getTarif() == null) {
-            System.out.print(Design.ANSI_RED+"AUNCUN TARIF DEFINI."+Design.ANSI_RESET);
+            System.out.print(Dsg.re +"AUNCUN TARIF DEFINI."+ Dsg.r);
         } else {
             System.out.print(data.getTarif().toString());
         }
@@ -123,7 +140,7 @@ public class ConsoleUi {
 
         Participant p = new Participant(type,club, email, tel,prenom, nom);
         data.getParticipants().add(p);
-        System.out.printf(Design.ANSI_RED+"✅ PARTICIPANT AJOUTE : %s"+Design.ANSI_RESET, p.toString());
+        System.out.printf(Dsg.re +"✅ PARTICIPANT AJOUTE : %s"+ Dsg.r, p.toString());
     }
 
     private void creerPlage() {
@@ -138,7 +155,7 @@ public class ConsoleUi {
 
         Plage p = new Plage(nom, jour, debut, fin);
         data.getPlages().add(p);
-        System.out.printf(Design.ANSI_RED+"✅ PLAGE CREE : %s"+Design.ANSI_RESET, p.toString());
+        System.out.printf(Dsg.re +"✅ PLAGE CREE : %s"+ Dsg.r, p.toString());
     }
 
     private void inscrireParticipant() {
@@ -166,7 +183,7 @@ public class ConsoleUi {
                     System.out.println(e.getMessage());
                 }
             } else {
-                System.out.print(Design.ANSI_RED+"❌ NUMERO INVALIDE !"+Design.ANSI_RESET);
+                System.out.print(Dsg.re +"❌ NUMERO INVALIDE !"+ Dsg.r);
             }
         }
 
@@ -179,7 +196,7 @@ public class ConsoleUi {
 
 
         data.getInscriptions().add(insc);
-        System.out.print(Design.ANSI_RED+"✅ INSCRIPTION AJOUTEE !"+Design.ANSI_RESET);
+        System.out.print(Dsg.re +"✅ INSCRIPTION AJOUTEE !"+ Dsg.r);
     }
 
     private void affecterAnimateur() {
@@ -188,16 +205,18 @@ public class ConsoleUi {
         Participant animateur = choisirParticipant();
         if (animateur == null) return;
         p.setAnimateur(animateur);
-        System.out.printf(Design.ANSI_RED+"✅ ANIMATEUR %s AFFECTE à %s"+Design.ANSI_RESET ,animateur.toString() , p.getNom());
+        System.out.printf(Dsg.re +"✅ ANIMATEUR %s AFFECTE à %s"+ Dsg.r,animateur.toString() , p.getNom());
     }
 
     private void afficherInscriptions() {
-        System.out.println(Design.ANSI_RED+"\n=== Participants ==="+Design.ANSI_RESET);
+        System.out.println(Dsg.re +"\n=== Participants ==="+ Dsg.r);
+        System.out.println(String.format("%-15s %-15s %-15s %-10s%n","Nom", "Prénom", "Club", "Type"));
         for (Participant p : data.getParticipants()) {
-            System.out.println("- " + p.toString());
+            System.out.println(p.toString());
         }
 
-        System.out.println(Design.ANSI_RED+"\n=== Inscriptions ==="+Design.ANSI_RESET);
+        System.out.println(Dsg.re +"\n=== Inscriptions ==="+ Dsg.r);
+        System.out.println(String.format("%-15s %-15s %-15s %-14s %-37s %-48s %-10s%n","Nom", "Prénom", "Club", "Type", "🍔Souper/🏦Logement","🕛 Plages","👤Animateur"));
         for (Inscription i : data.getInscriptions()) {
             System.out.println(i.toString());
         }
@@ -213,18 +232,18 @@ public class ConsoleUi {
                 .orElse(null);
 
         if (insc == null) {
-            System.out.print(Design.ANSI_RED+"❌ AUNCUNE INSCRIPTION TROUVE POUR CE PARTICIPANT !\n"+Design.ANSI_RESET);
+            System.out.print(Dsg.re +"❌ AUNCUNE INSCRIPTION TROUVE POUR CE PARTICIPANT !\n"+ Dsg.r);
             return;
         }
 
         double prix = service.calculerPrix(insc, data.getTarif(), data.getPlages().size());
-        System.out.printf(Design.ANSI_RED+"PRIX TOTAL POUR %s : %.2f"+Design.ANSI_RESET , p.toString() , prix);
+        System.out.printf(Dsg.re +"PRIX TOTAL POUR %s : %.2f"+ Dsg.r, p.toString() , prix);
     }
 
     private Participant choisirParticipant() {
         List<Participant> participants = data.getParticipants();
         if (participants.isEmpty()) {
-            System.out.print(Design.ANSI_RED+"AUNCUN PARTICIPANT !"+Design.ANSI_RESET);
+            System.out.print(Dsg.re +"AUNCUN PARTICIPANT !"+ Dsg.r);
             return null;
         }
 
@@ -263,5 +282,13 @@ public class ConsoleUi {
             return null;
         }
         return plages.get(num - 1);
+    }
+    public void test(){
+        System.out.println("┌──────┬──────┐");
+        System.out.println("│      │      │");
+        System.out.println("├──────┼──────┤");
+        System.out.println("│      │      │");
+        System.out.println("│      │      │");
+        System.out.println("└──────┴──────┘");
     }
 }

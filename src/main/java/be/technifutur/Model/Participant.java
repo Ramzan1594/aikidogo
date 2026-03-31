@@ -39,6 +39,9 @@ public class Participant implements Serializable {
 
     @Override
     public String toString() {
-        return nom + " " + prenom + " (club:" +  clubName +" status:" + type.toString() + ")";
+//        return nom + " " + prenom + " (club:" +  clubName +" status:" + type.toString() + ")";
+        StringBuilder sb = new StringBuilder();//
+        sb.append(String.format("%-15s %-15s %-15s %-10s",nom, prenom, clubName, type));
+        return sb.toString();
     }
 }

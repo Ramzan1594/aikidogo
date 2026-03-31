@@ -19,6 +19,7 @@ public class Main {
         ConsoleUi ui = new ConsoleUi(service, stageAikido);
         ui.start();
 
+
 //        StageData stageAikido = DataStorage.load("dataAikidogo.ser");
        /* StageData stageAikido =  new StageData();
 
