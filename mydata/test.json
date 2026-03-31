@@ -1,0 +1,299 @@
+{
+  "participants": [
+    {
+      "id": "99ac5e6a-08df-4754-b948-f42ba2e9a06a",
+      "nom": "Son",
+      "prenom": "Goku",
+      "tel": "+00 000 000 000",
+      "mail": "goku@mail.com",
+      "clubName": "Kakaroto",
+      "type": "ANIMATEUR"
+    },
+    {
+      "id": "f4b289af-ee15-4798-af64-c871d40c8f08",
+      "nom": "Mishima",
+      "prenom": "Kazuya",
+      "tel": "+014 111 111 111",
+      "mail": "kazzz@email.com",
+      "clubName": "Zaybatcu",
+      "type": "NORMAL"
+    },
+    {
+      "id": "da982e64-2352-4da9-931e-f844bb4ea29c",
+      "nom": "Yeagar",
+      "prenom": "Eren",
+      "tel": "+11 222 222 222",
+      "mail": "eren@email.com",
+      "clubName": "ShinzoSasagiyo",
+      "type": "NORMAL"
+    },
+    {
+      "id": "9b8b6e04-f557-4f64-9c6c-b56ca0fb0b66",
+      "nom": "Eater",
+      "prenom": "Snake",
+      "tel": "otacon",
+      "mail": "SonsOfPatriots",
+      "clubName": "SonsOfPatriots",
+      "type": "ANIMATEUR"
+    },
+    {
+      "id": "cf886d55-f10b-48de-b661-fb0625be287b",
+      "nom": "GHOST",
+      "prenom": "Kratos",
+      "tel": "+0000000000",
+      "mail": "kratos@email.com",
+      "clubName": "GhostOfSParta",
+      "type": "NORMAL"
+    },
+    {
+      "id": "12b62535-cb2a-4d0d-bdcb-1535dbbdb2f6",
+      "nom": "Castle",
+      "prenom": "Frank",
+      "tel": "no",
+      "mail": "no",
+      "clubName": "Punisher",
+      "type": "NORMAL"
+    },
+    {
+      "id": "103dcd46-bb52-4e59-bcf8-3798734e365c",
+      "nom": "Prime",
+      "prenom": "Optimus",
+      "tel": "0486 868 888",
+      "mail": "im the mail",
+      "clubName": "PrimeAutobot",
+      "type": "NORMAL"
+    },
+    {
+      "id": "cf6c47c8-fe97-46a3-a15d-37ac33f795cf",
+      "nom": "Sparrow ",
+      "prenom": "Jack",
+      "tel": "0000 000 000",
+      "mail": "sparrow@mail.com",
+      "clubName": "CaptainJack",
+      "type": "NORMAL"
+    },
+    {
+      "id": "68193044-f3be-4172-8d35-3f9111ce62ce",
+      "nom": "Swarcneger",
+      "prenom": "Arnold",
+      "tel": "1111 111 111",
+      "mail": "ter@email.com",
+      "clubName": "Terminator",
+      "type": "NORMAL"
+    },
+    {
+      "id": "629e171c-b869-43e0-ae94-8c63a59eed04",
+      "nom": "Potter",
+      "prenom": "Harry",
+      "tel": "hiboux",
+      "mail": "potter@email.com",
+      "clubName": "Poudlard",
+      "type": "NORMAL"
+    }
+  ],
+  "inscriptions": [
+    {
+      "participant": {
+        "id": "12b62535-cb2a-4d0d-bdcb-1535dbbdb2f6",
+        "nom": "Castle",
+        "prenom": "Frank",
+        "tel": "no",
+        "mail": "no",
+        "clubName": "Punisher",
+        "type": "NORMAL"
+      },
+      "plages": [
+        {
+          "nom": "NO JOKE",
+          "jour": "SAMANCHE",
+          "heureDebut": "00",
+          "heureFin": "00",
+          "animateur": {
+            "id": "99ac5e6a-08df-4754-b948-f42ba2e9a06a",
+            "nom": "Son",
+            "prenom": "Goku",
+            "tel": "+00 000 000 000",
+            "mail": "goku@mail.com",
+            "clubName": "Kakaroto",
+            "type": "ANIMATEUR"
+          }
+        }
+      ],
+      "souper": false,
+      "logement": false
+    },
+    {
+      "participant": {
+        "id": "9b8b6e04-f557-4f64-9c6c-b56ca0fb0b66",
+        "nom": "Eater",
+        "prenom": "Snake",
+        "tel": "otacon",
+        "mail": "SonsOfPatriots",
+        "clubName": "SonsOfPatriots",
+        "type": "ANIMATEUR"
+      },
+      "plages": [
+        {
+          "nom": "NO JOKE",
+          "jour": "SAMANCHE",
+          "heureDebut": "00",
+          "heureFin": "00",
+          "animateur": {
+            "id": "99ac5e6a-08df-4754-b948-f42ba2e9a06a",
+            "nom": "Son",
+            "prenom": "Goku",
+            "tel": "+00 000 000 000",
+            "mail": "goku@mail.com",
+            "clubName": "Kakaroto",
+            "type": "ANIMATEUR"
+          }
+        }
+      ],
+      "souper": false,
+      "logement": false
+    },
+    {
+      "participant": {
+        "id": "68193044-f3be-4172-8d35-3f9111ce62ce",
+        "nom": "Swarcneger",
+        "prenom": "Arnold",
+        "tel": "1111 111 111",
+        "mail": "ter@email.com",
+        "clubName": "Terminator",
+        "type": "NORMAL"
+      },
+      "plages": [
+        {
+          "nom": "NO JOKE",
+          "jour": "SAMANCHE",
+          "heureDebut": "00",
+          "heureFin": "00",
+          "animateur": {
+            "id": "99ac5e6a-08df-4754-b948-f42ba2e9a06a",
+            "nom": "Son",
+            "prenom": "Goku",
+            "tel": "+00 000 000 000",
+            "mail": "goku@mail.com",
+            "clubName": "Kakaroto",
+            "type": "ANIMATEUR"
+          }
+        }
+      ],
+      "souper": false,
+      "logement": false
+    },
+    {
+      "participant": {
+        "id": "da982e64-2352-4da9-931e-f844bb4ea29c",
+        "nom": "Yeagar",
+        "prenom": "Eren",
+        "tel": "+11 222 222 222",
+        "mail": "eren@email.com",
+        "clubName": "ShinzoSasagiyo",
+        "type": "NORMAL"
+      },
+      "plages": [
+        {
+          "nom": "NO JOKE",
+          "jour": "SAMANCHE",
+          "heureDebut": "00",
+          "heureFin": "00",
+          "animateur": {
+            "id": "99ac5e6a-08df-4754-b948-f42ba2e9a06a",
+            "nom": "Son",
+            "prenom": "Goku",
+            "tel": "+00 000 000 000",
+            "mail": "goku@mail.com",
+            "clubName": "Kakaroto",
+            "type": "ANIMATEUR"
+          }
+        }
+      ],
+      "souper": false,
+      "logement": false
+    },
+    {
+      "participant": {
+        "id": "f4b289af-ee15-4798-af64-c871d40c8f08",
+        "nom": "Mishima",
+        "prenom": "Kazuya",
+        "tel": "+014 111 111 111",
+        "mail": "kazzz@email.com",
+        "clubName": "Zaybatcu",
+        "type": "NORMAL"
+      },
+      "plages": [
+        {
+          "nom": "NO JOKE",
+          "jour": "SAMANCHE",
+          "heureDebut": "00",
+          "heureFin": "00",
+          "animateur": {
+            "id": "99ac5e6a-08df-4754-b948-f42ba2e9a06a",
+            "nom": "Son",
+            "prenom": "Goku",
+            "tel": "+00 000 000 000",
+            "mail": "goku@mail.com",
+            "clubName": "Kakaroto",
+            "type": "ANIMATEUR"
+          }
+        }
+      ],
+      "souper": false,
+      "logement": false
+    },
+    {
+      "participant": {
+        "id": "cf886d55-f10b-48de-b661-fb0625be287b",
+        "nom": "GHOST",
+        "prenom": "Kratos",
+        "tel": "+0000000000",
+        "mail": "kratos@email.com",
+        "clubName": "GhostOfSParta",
+        "type": "NORMAL"
+      },
+      "plages": [
+        {
+          "nom": "NO JOKE",
+          "jour": "SAMANCHE",
+          "heureDebut": "00",
+          "heureFin": "00",
+          "animateur": {
+            "id": "99ac5e6a-08df-4754-b948-f42ba2e9a06a",
+            "nom": "Son",
+            "prenom": "Goku",
+            "tel": "+00 000 000 000",
+            "mail": "goku@mail.com",
+            "clubName": "Kakaroto",
+            "type": "ANIMATEUR"
+          }
+        }
+      ],
+      "souper": false,
+      "logement": false
+    }
+  ],
+  "plages": [
+    {
+      "nom": "NO JOKE",
+      "jour": "SAMANCHE",
+      "heureDebut": "00",
+      "heureFin": "00",
+      "animateur": {
+        "id": "99ac5e6a-08df-4754-b948-f42ba2e9a06a",
+        "nom": "Son",
+        "prenom": "Goku",
+        "tel": "+00 000 000 000",
+        "mail": "goku@mail.com",
+        "clubName": "Kakaroto",
+        "type": "ANIMATEUR"
+      }
+    }
+  ],
+  "tarif": {
+    "pPlage": 5000.0,
+    "pSouper": 2000.0,
+    "pLogement": 1000.0,
+    "pFullPlages": 40000.0
+  }
+}

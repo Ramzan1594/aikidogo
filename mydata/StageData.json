@@ -1,80 +1,173 @@
 {
   "participants": [
     {
-      "id": "a131b88c-69db-4293-82d3-b5a4285adf6d",
-      "nom": "Jack",
-      "prenom": "Portier",
-      "tel": "teltest",
-      "mail": "emailtest",
-      "clubName": "clubAA",
+      "id": "06517f57-a813-4206-a569-f9ae057b7304",
+      "nom": "ram",
+      "prenom": "fight club",
+      "tel": "ram@mail.com",
+      "mail": "165µ",
+      "clubName": "zan",
+      "type": "ANIMATEUR"
+    },
+    {
+      "id": "1c82597b-7ba5-4ebf-90e8-3967a5da7315",
+      "nom": "al",
+      "prenom": "cluber go",
+      "tel": "test@mail.com",
+      "mail": "561531",
+      "clubName": "an",
+      "type": "NORMAL"
+    },
+    {
+      "id": "dd13f29d-0dbd-4a7d-b494-13fd11ef4f70",
+      "nom": "ab",
+      "prenom": "go fight",
+      "tel": "mail@email.com",
+      "mail": "6531",
+      "clubName": "dul",
       "type": "NORMAL"
     }
   ],
   "inscriptions": [
     {
       "participant": {
-        "id": "a131b88c-69db-4293-82d3-b5a4285adf6d",
-        "nom": "Jack",
-        "prenom": "Portier",
-        "tel": "teltest",
-        "mail": "emailtest",
-        "clubName": "clubAA",
+        "id": "1c82597b-7ba5-4ebf-90e8-3967a5da7315",
+        "nom": "al",
+        "prenom": "cluber go",
+        "tel": "test@mail.com",
+        "mail": "561531",
+        "clubName": "an",
         "type": "NORMAL"
       },
       "plages": [
         {
-          "nom": "Samedi matin 1",
-          "jour": "Samedi",
-          "heureDebut": "9:00",
-          "heureFin": "10:30",
+          "nom": "samedi matin",
+          "jour": "samedi",
+          "heureDebut": "10",
+          "heureFin": "11",
           "animateur": {
-            "id": "a131b88c-69db-4293-82d3-b5a4285adf6d",
-            "nom": "Jack",
-            "prenom": "Portier",
-            "tel": "teltest",
-            "mail": "emailtest",
-            "clubName": "clubAA",
-            "type": "NORMAL"
+            "id": "06517f57-a813-4206-a569-f9ae057b7304",
+            "nom": "ram",
+            "prenom": "fight club",
+            "tel": "ram@mail.com",
+            "mail": "165µ",
+            "clubName": "zan",
+            "type": "ANIMATEUR"
           }
         }
       ],
       "souper": true,
-      "logement": false
+      "logement": true
+    },
+    {
+      "participant": {
+        "id": "dd13f29d-0dbd-4a7d-b494-13fd11ef4f70",
+        "nom": "ab",
+        "prenom": "go fight",
+        "tel": "mail@email.com",
+        "mail": "6531",
+        "clubName": "dul",
+        "type": "NORMAL"
+      },
+      "plages": [
+        {
+          "nom": "samedi matin",
+          "jour": "samedi",
+          "heureDebut": "10",
+          "heureFin": "11",
+          "animateur": {
+            "id": "06517f57-a813-4206-a569-f9ae057b7304",
+            "nom": "ram",
+            "prenom": "fight club",
+            "tel": "ram@mail.com",
+            "mail": "165µ",
+            "clubName": "zan",
+            "type": "ANIMATEUR"
+          }
+        }
+      ],
+      "souper": true,
+      "logement": true
+    },
+    {
+      "participant": {
+        "id": "dd13f29d-0dbd-4a7d-b494-13fd11ef4f70",
+        "nom": "ab",
+        "prenom": "go fight",
+        "tel": "mail@email.com",
+        "mail": "6531",
+        "clubName": "dul",
+        "type": "NORMAL"
+      },
+      "plages": [
+        {
+          "nom": "dimanche matin1",
+          "jour": "dimanche",
+          "heureDebut": "10",
+          "heureFin": "11",
+          "animateur": {
+            "id": "06517f57-a813-4206-a569-f9ae057b7304",
+            "nom": "ram",
+            "prenom": "fight club",
+            "tel": "ram@mail.com",
+            "mail": "165µ",
+            "clubName": "zan",
+            "type": "ANIMATEUR"
+          }
+        }
+      ],
+      "souper": true,
+      "logement": true
     }
   ],
   "plages": [
     {
-      "nom": "Samedi matin 1",
-      "jour": "Samedi",
-      "heureDebut": "9:00",
-      "heureFin": "10:30",
+      "nom": "samedi matin",
+      "jour": "samedi",
+      "heureDebut": "10",
+      "heureFin": "11",
       "animateur": {
-        "id": "a131b88c-69db-4293-82d3-b5a4285adf6d",
-        "nom": "Jack",
-        "prenom": "Portier",
-        "tel": "teltest",
-        "mail": "emailtest",
-        "clubName": "clubAA",
-        "type": "NORMAL"
+        "id": "06517f57-a813-4206-a569-f9ae057b7304",
+        "nom": "ram",
+        "prenom": "fight club",
+        "tel": "ram@mail.com",
+        "mail": "165µ",
+        "clubName": "zan",
+        "type": "ANIMATEUR"
       }
     },
     {
-      "nom": "Samedi matin 2",
-      "jour": "Samedi",
-      "heureDebut": "10:30",
-      "heureFin": "12:00"
+      "nom": "samdedi mat2",
+      "jour": "samedi",
+      "heureDebut": "11",
+      "heureFin": "12"
     },
     {
-      "nom": "Samedi aprem 1",
-      "jour": "Samedi",
-      "heureDebut": "12:30",
-      "heureFin": "13:30"
+      "nom": "dimanche matin1",
+      "jour": "dimanche",
+      "heureDebut": "10",
+      "heureFin": "11",
+      "animateur": {
+        "id": "06517f57-a813-4206-a569-f9ae057b7304",
+        "nom": "ram",
+        "prenom": "fight club",
+        "tel": "ram@mail.com",
+        "mail": "165µ",
+        "clubName": "zan",
+        "type": "ANIMATEUR"
+      }
+    },
+    {
+      "nom": "dimanche matin2",
+      "jour": "dimanche",
+      "heureDebut": "11",
+      "heureFin": "12"
     }
   ],
   "tarif": {
-    "pPlage": 10.0,
-    "pSouper": 5.0,
-    "pLogement": 10.0,
-    "pFullPlages": 60.0
+    "pPlage": 17.0,
+    "pSouper": 8.0,
+    "pLogement": 5.0,
+    "pFullPlages": 70.0
   }
 }

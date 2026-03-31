@@ -29,12 +29,11 @@ public class Tarif implements Serializable {
 
     @Override
     public String toString() {
-        return "Tarif{" +
-                "prixParPlage=" + pPlage +
-                ", prixSouper=" + pSouper +
-                ", prixLogement=" + pLogement +
-                ", prixFull=" + pFullPlages +
-                '}';
+        return "TARIF \n---------\n" +
+                "Plage=" + pPlage +
+                "€\nSouper=" + pSouper +
+                "€\nLogement=" + pLogement +
+                "€\nFull=" + pFullPlages;
     }
 
 

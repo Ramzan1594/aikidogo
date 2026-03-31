@@ -34,5 +34,20 @@ public class Inscription  implements Serializable {
     public boolean isLogement() { return logement; }
     public void setLogement(boolean logement) { this.logement = logement; }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(participant.toString());
+        sb.append(" || ");
+        for(Plage p : plages) {
+            sb.append(p.toString());
+        }
+        sb.append(" || Souper : ");
+        sb.append(isSouper() ? "oui":"non");
+        sb.append("- Logement : ");
+        sb.append(isLogement() ? "oui":"non");
+
+        return sb.toString();
+    }
 
 }

@@ -16,17 +16,22 @@ public class StageService implements Serializable {
     public double calculerPrix(Inscription ins, Tarif t, int totalPlages) {
         int nbPlage = ins.getPlages().size();
         double total;
-        if(nbPlage == totalPlages)
-            total = t.getpFullPlages();
-        else
-            total = nbPlage * t.getpPlage();
+        if (t == null) {
+            System.out.println("⚠️ Aucun tarif défini !");
+            total = 0;
+        }else{
+            if(nbPlage == totalPlages)
+                total = t.getpFullPlages();
+            else
+                total = nbPlage * t.getpPlage();
 
-        if(ins.isSouper())
-            total += t.getpSouper();
-        if(ins.isLogement())
-            total += t.getpLogement();
+            if(ins.isSouper())
+                total += t.getpSouper();
+            if(ins.isLogement())
+                total += t.getpLogement();
 
-        total *= ins.getParticipant().getType().getCoefficient();
+            total *= ins.getParticipant().getType().getCoefficient();
+        }
         return total;
     }
 }

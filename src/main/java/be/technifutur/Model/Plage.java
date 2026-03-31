@@ -26,8 +26,8 @@ public class Plage implements Serializable {
 
     @Override
     public String toString(){
-        return nom + " (" + jour + ") - Animateur: " +
-                (animateur != null ? animateur.toString() : "Non défini");
+        return "Plage : " + nom + " (jour:" + jour + " "+heureDebut+"h-->"+ heureFin +"h) - Animateur: " +
+                (animateur != null ? animateur.getNom() + " " + animateur.getPrenom() : "Non défini");
     }
 
 

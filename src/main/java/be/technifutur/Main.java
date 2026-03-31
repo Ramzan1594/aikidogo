@@ -3,16 +3,23 @@ package be.technifutur;
 import be.technifutur.Model.*;
 import be.technifutur.Service.StageService;
 import be.technifutur.Storage.DataStorage;
+import be.technifutur.Ui.ConsoleUi;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class Main {
     static void main() throws Exception {
 
-//        StageData stageAikido = DataStorage.load("dataAikidogo.ser");
         StageData stageAikido =  new StageData();
+        StageService service = new StageService();
+
+        ConsoleUi ui = new ConsoleUi(service, stageAikido);
+        ui.start();
+//        StageData stageAikido = DataStorage.load("dataAikidogo.ser");
+       /* StageData stageAikido =  new StageData();
 
         Plage pl = new Plage("Samedi matin 1","Samedi", "9:00","10:30");
         Plage pl2 = new Plage("Samedi matin 2","Samedi", "10:30","12:00");
@@ -60,9 +67,40 @@ public class Main {
         storage.save(stageAikido);
 
 
-        System.out.println(AppInfo.appVersion());
+        System.out.println(AppInfo.appVersion());*/
 
 
 
     }
+
+
+    private StageData choisirFichier() {
+        File folder = new File("./mydata/");
+        File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
+
+        if (files == null || files.length == 0) {
+            System.out.println("Aucun fichier trouvé !");
+            return new StageData();
+        }
+
+        System.out.println("=== Choisissez un fichier ===");
+
+        for (int i = 0; i < files.length; i++) {
+            System.out.println((i + 1) + ". " + files[i].getName());
+        }
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Votre choix : ");
+        int choix = scanner.nextInt();
+        scanner.nextLine();
+
+        if (choix < 1 || choix > files.length) {
+            System.out.println("Choix invalide !");
+            return new StageData();
+        }
+
+        return DataStorage.load(files[choix - 1].getPath());
+    }
+
 }

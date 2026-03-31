@@ -1,37 +1,27 @@
 package be.technifutur.Storage;
 
+import be.technifutur.Design;
 import be.technifutur.Model.StageData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.*;
+import java.sql.SQLOutput;
+import java.util.Scanner;
 
 //READ AND WRITE DES FILES
 public class DataStorage {
-//    public static void save(StageData data, String file){
-//        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file)))
-//        {
-//            oos.writeObject(data);
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public static StageData load(String file){
-//        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file)))
-//        {
-//            return (StageData)ois.readObject();
-//        }catch (Exception e){
-//            return new StageData();
-//        }
-//    }
     private static Gson json = new GsonBuilder()
             .setPrettyPrinting() // nice formatted JSON
             .create();
 
     public static void save(Object obj) {
+        Scanner scanner  = new Scanner(System.in);
+        System.out.print("Entree le nom du ficher à enregistrée : ");
+        String fileName = scanner.nextLine();
+
         // Create a File object
-        File file = new File("./mydata/"+obj.getClass().getSimpleName()+".json");
+        File file = new File("./mydata/"+fileName+".json");
 
         // Optional: delete the file if it exists (just to be explicit)
         if (file.exists()) {
@@ -41,7 +31,8 @@ public class DataStorage {
         try {
             FileWriter writer = new FileWriter(file);
             json.toJson(obj, writer);
-            System.out.printf("\n%s saved to JSON in %s",obj.getClass().getSimpleName(),file.getPath());
+            //System.out.printf("\n%s saved to JSON in %s\n",obj.getClass().getSimpleName(),file.getPath());
+            System.out.printf(Design.ANSI_RED+"✅ DATA ENREGISTRER DANS %s"+Design.ANSI_RESET,file.getPath());
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,7 +43,7 @@ public class DataStorage {
         try (FileReader reader = new FileReader(filename)) {
             return json.fromJson(reader, StageData.class);
         } catch (IOException e) {
-            System.out.println("File not found, returning new StageData");
+            System.out.print(Design.ANSI_RED+"❌ FICHIER NON TROUVE"+Design.ANSI_RESET);
             return new StageData();
         }
     }
