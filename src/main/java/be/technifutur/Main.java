@@ -73,35 +73,4 @@ public class Main {
 
 
     }
-
-
-    private StageData choisirFichier() {
-        File folder = new File("./mydata/");
-        File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
-
-        if (files == null || files.length == 0) {
-            System.out.println("Aucun fichier trouvé !");
-            return new StageData();
-        }
-
-        System.out.println("=== Choisissez un fichier ===");
-
-        for (int i = 0; i < files.length; i++) {
-            System.out.println((i + 1) + ". " + files[i].getName());
-        }
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Votre choix : ");
-        int choix = scanner.nextInt();
-        scanner.nextLine();
-
-        if (choix < 1 || choix > files.length) {
-            System.out.println("Choix invalide !");
-            return new StageData();
-        }
-
-        return DataStorage.load(files[choix - 1].getPath());
-    }
-
 }

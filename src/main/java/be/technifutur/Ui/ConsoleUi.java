@@ -66,46 +66,14 @@ public class ConsoleUi {
     }
 
     private void loadFile() {
-        File folder = new File("./mydata/");
-        File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
-
-        if (files == null || files.length == 0) {
-            System.out.print(Design.ANSI_RED+"❌ AUNCUN FICHIER TROUVE !"+Design.ANSI_RESET);
-            data = new StageData();
-            return;
-        }
-
-        System.out.println("=== Choisissez un fichier ===");
-        System.out.println("0. Nouveau fichier");
-
-        for (int i = 0; i < files.length; i++) {
-            System.out.println((i + 1) + ". " + files[i].getName());
-        }
-
-        System.out.print("Choix : ");
-        int choix = scanner.nextInt();
-        scanner.nextLine();
-
-        if (choix == 0) {
-            data = new StageData();
-            System.out.print(Design.ANSI_RED+"✅ NOUVEAU STAGE CREE."+Design.ANSI_RESET);
-            return;
-        }
-
-        if (choix < 1 || choix > files.length) {
-            System.out.print("CHOIX INVALIDE !");
-            return;
-        }
-
-        data = DataStorage.load(files[choix - 1].getPath());
-
-        System.out.printf(Design.ANSI_RED+"✅ FICHIER CHARGE : %s"+Design.ANSI_RESET , files[choix - 1].getName());
+        data = DataStorage.load();
     }
 
     private void saveStageData() {
         DataStorage storage = new DataStorage();
         storage.save(data);
     }
+
     private void definirTarif() {
 
         System.out.println("=== Définition des tarifs ===");

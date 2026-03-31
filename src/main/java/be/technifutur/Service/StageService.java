@@ -13,6 +13,7 @@ import java.util.List;
 // classe metier , c'est ici qu'on va faire les calcules pour ne pas les faires
 //dans les classe model
 public class StageService implements Serializable {
+
     public double calculerPrix(Inscription ins, Tarif t, int totalPlages) {
         int nbPlage = ins.getPlages().size();
         double total;
@@ -34,4 +35,5 @@ public class StageService implements Serializable {
         }
         return total;
     }
+
 }

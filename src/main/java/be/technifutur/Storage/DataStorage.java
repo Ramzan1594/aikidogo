@@ -39,13 +39,57 @@ public class DataStorage {
         }
     }
 
-    public static StageData load(String filename){
-        try (FileReader reader = new FileReader(filename)) {
-            return json.fromJson(reader, StageData.class);
-        } catch (IOException e) {
-            System.out.print(Design.ANSI_RED+"❌ FICHIER NON TROUVE"+Design.ANSI_RESET);
-            return new StageData();
+    public static StageData load(){
+//        try (FileReader reader = new FileReader(filename)) {
+//            return json.fromJson(reader, StageData.class);
+//        } catch (IOException e) {
+//            System.out.print(Design.ANSI_RED+"❌ FICHIER NON TROUVE"+Design.ANSI_RESET);
+//            return new StageData();
+//        }
+        Scanner  scanner  = new Scanner(System.in);
+        StageData data = new StageData();
+        File folder = new File("./mydata/");
+        File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
+
+        if (files == null || files.length == 0) {
+            System.out.print(Design.ANSI_RED+"❌ AUNCUN FICHIER TROUVE !"+Design.ANSI_RESET);
+            data = new StageData();
+//            return;
         }
+
+        System.out.println("=== Choisissez un fichier ===");
+        System.out.println("0. Nouveau fichier");
+
+        for (int i = 0; i < files.length; i++) {
+            System.out.println((i + 1) + ". " + files[i].getName());
+        }
+
+        System.out.print("Choix : ");
+        int choix = scanner.nextInt();
+        scanner.nextLine();
+
+        if (choix == 0) {
+            data = new StageData();
+            System.out.print(Design.ANSI_RED+"✅ NOUVEAU STAGE CREE."+Design.ANSI_RESET);
+//            return;
+        }
+
+        if (choix < 1 || choix > files.length) {
+            System.out.print("CHOIX INVALIDE !");
+//            return;
+        }
+
+//        data = DataStorage.load(files[choix - 1].getPath());
+        try (FileReader reader = new FileReader(files[choix - 1].getPath())) {
+            data = json.fromJson(reader, StageData.class);
+        } catch (IOException e) {
+            System.out.print(Design.ANSI_RED+"❌ FICHIER NON TROUVE, UN NOUVEAU SERA CREE"+Design.ANSI_RESET);
+        }
+
+        System.out.printf(Design.ANSI_RED+"✅ FICHIER CHARGE : %s"+Design.ANSI_RESET , files[choix - 1].getName());
+
+        return data;
+
     }
 
 }
