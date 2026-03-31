@@ -9,6 +9,7 @@ public class Plage implements Serializable {
     private String heureFin;
     private Participant animateur;
 
+
     public Plage(String nom, String jour, String heureDebut, String heureFin) {
         this.nom = nom;
         this.jour = jour;
