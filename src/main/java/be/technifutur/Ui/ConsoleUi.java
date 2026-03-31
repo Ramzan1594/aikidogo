@@ -76,13 +76,12 @@ public class ConsoleUi {
                 case "c" -> calculerPrix();
                 case "a" -> afficherInscriptions();
                 case "t" -> afficherTarif();
-                default -> System.out.println(Dsg.re +"❌ CHOIX INVALIDE !"+ Dsg.r);
+                default -> System.out.println(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
             }
         }
     }
 
     private void loadFile() {
-        System.out.println("testy");
         data = DataStorage.load();
     }
 
@@ -183,7 +182,7 @@ public class ConsoleUi {
                     System.out.println(e.getMessage());
                 }
             } else {
-                System.out.print(Dsg.re +"❌ NUMERO INVALIDE !"+ Dsg.r);
+                System.out.print(Dsg.re+Dsg.bo+"❌ NUMERO INVALIDE !"+ Dsg.r);
             }
         }
 
@@ -232,7 +231,7 @@ public class ConsoleUi {
                 .orElse(null);
 
         if (insc == null) {
-            System.out.print(Dsg.re +"❌ AUNCUNE INSCRIPTION TROUVE POUR CE PARTICIPANT !\n"+ Dsg.r);
+            System.out.print(Dsg.re+Dsg.bo+"❌ AUNCUNE INSCRIPTION TROUVE POUR CE PARTICIPANT !\n"+ Dsg.r);
             return;
         }
 
@@ -256,7 +255,7 @@ public class ConsoleUi {
         int num = scanner.nextInt();
         scanner.nextLine();
         if (num < 1 || num > participants.size()) {
-            System.out.print("❌ NUMERO INVALIDE !");
+            System.out.print(Dsg.re+Dsg.bo+"❌ NUMERO INVALIDE !"+Dsg.r);
             return null;
         }
         return participants.get(num - 1);
@@ -278,7 +277,7 @@ public class ConsoleUi {
         int num = scanner.nextInt();
         scanner.nextLine();
         if (num < 1 || num > plages.size()) {
-            System.out.print("❌ NUMERO INVALIDE !");
+            System.out.print(Dsg.re+Dsg.bo+"❌ NUMERO INVALIDE !"+Dsg.r);
             return null;
         }
         return plages.get(num - 1);

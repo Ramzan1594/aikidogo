@@ -13,6 +13,11 @@ import java.util.Scanner;
 public class Main {
     static void main() throws Exception {
 
+        String ss ="CHOIX INVALIDE !"+"*";
+        String ss1 ="❌ CHOIX INVALIDE !"+"*";
+        String ss2 =Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+Dsg.r+"*";
+        System.out.printf("%d %d %d", ss.length(), ss1.length(), ss2.length());
+
         StageData stageAikido =  new StageData();
         StageService service = new StageService();
 

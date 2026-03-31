@@ -2,6 +2,7 @@ package be.technifutur.Storage;
 
 import be.technifutur.Dsg;
 import be.technifutur.Model.StageData;
+import be.technifutur.Model.Tabeau;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -10,6 +11,7 @@ import java.util.Scanner;
 
 //READ AND WRITE DES FILES
 public class DataStorage {
+    private static StringBuilder sb;
     private static Gson json = new GsonBuilder()
             .setPrettyPrinting() // nice formatted JSON
             .create();
@@ -45,6 +47,7 @@ public class DataStorage {
 //            System.out.print(Design.ANSI_RED+"❌ FICHIER NON TROUVE"+Design.ANSI_RESET);
 //            return new StageData();
 //        }
+        sb = new StringBuilder();
         Scanner  scanner  = new Scanner(System.in);
         StageData data = new StageData();
         File folder = new File("./mydata/");
@@ -56,39 +59,54 @@ public class DataStorage {
 //            return;
         }
 
-        System.out.println("=== Choisissez un fichier ===");
-        System.out.println("0. Nouveau fichier");
-
+        String title = "=== Choisissez un fichier ===*";
+        sb.append("=== Choisissez un fichier ===*");
+        sb.append("0. Nouveau fichier*");
         for (int i = 0; i < files.length; i++) {
-            System.out.println((i + 1) + ". " + files[i].getName());
+            sb.append((i + 1) + ". " + files[i].getName()+"*");
         }
+        System.out.println(Tabeau.displayInbox("",sb));
+        sb.setLength(0);
+//        System.out.println("=== Choisissez un fichier ===");
+//        System.out.println("0. Nouveau fichier");
+//
+//        for (int i = 0; i < files.length; i++) {
+//            System.out.println((i + 1) + ". " + files[i].getName());
+//        }
 
         System.out.print("Choix : ");
-        int choix = scanner.nextInt();
-        scanner.nextLine();
+        int choix = -1;
+        String input = scanner.nextLine();
+        //test si l entree est un digit
+        if (input.matches("\\d+")) {
+            choix = Integer.parseInt(input);
+        } else {
+//            System.out.println(Dsg.re+Dsg.bo+"⛔⛔⛔ LE CHOIX DOIT ETRE UN NUMERO ⛔⛔⛔"+Dsg.r);
+            sb.append(" LE CHOIX DOIT ETRE UN NUMERO "+"*");
+        }
 
         if (choix == 0) {
             data = new StageData();
             System.out.print(Dsg.re +"✅ NOUVEAU STAGE CREE."+ Dsg.r);
-//            return;
         }
 
         if (choix < 1 || choix > files.length) {
-            System.out.print("CHOIX INVALIDE !");
-//            return;
+//            System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+Dsg.r);
+            sb.append(" CHOIX INVALIDE! "+"*");
+            System.out.print(Tabeau.displayInbox(Dsg.re+Dsg.bo,sb));
+        }else{
+    //        data = DataStorage.load(files[choix - 1].getPath());
+            try (FileReader reader = new FileReader(files[choix - 1].getPath())) {
+                data = json.fromJson(reader, StageData.class);
+            } catch (IOException e) {
+//                System.out.print(Dsg.re +"❌ FICHIER NON TROUVE, UN NOUVEAU SERA CREE"+ Dsg.r);
+                sb.append(" FICHIER NON TROUVE, UN NOUVEAU SERA CREE "+"*");
+                System.out.println(Tabeau.displayInbox(Dsg.re+Dsg.bo,sb));
+            }
+
+            System.out.printf(Dsg.re +"✅ FICHIER CHARGE : %s"+ Dsg.r, files[choix - 1].getName());
         }
-
-//        data = DataStorage.load(files[choix - 1].getPath());
-        try (FileReader reader = new FileReader(files[choix - 1].getPath())) {
-            data = json.fromJson(reader, StageData.class);
-        } catch (IOException e) {
-            System.out.print(Dsg.re +"❌ FICHIER NON TROUVE, UN NOUVEAU SERA CREE"+ Dsg.r);
-        }
-
-        System.out.printf(Dsg.re +"✅ FICHIER CHARGE : %s"+ Dsg.r, files[choix - 1].getName());
-
         return data;
-
     }
 
 }
