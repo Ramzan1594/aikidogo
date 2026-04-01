@@ -291,9 +291,9 @@
     }
   ],
   "tarif": {
-    "pPlage": 5000.0,
-    "pSouper": 2000.0,
-    "pLogement": 1000.0,
+    "pPlage": 4500.0,
+    "pSouper": 1050.0,
+    "pLogement": 2500.0,
     "pFullPlages": 40000.0
   }
 }

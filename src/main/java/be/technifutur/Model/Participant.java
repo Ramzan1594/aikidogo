@@ -1,6 +1,7 @@
 package be.technifutur.Model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Participant implements Serializable {
@@ -40,8 +41,26 @@ public class Participant implements Serializable {
     @Override
     public String toString() {
 //        return nom + " " + prenom + " (club:" +  clubName +" status:" + type.toString() + ")";
-        StringBuilder sb = new StringBuilder();//
-        sb.append(String.format("%-15s %-15s %-15s %-10s",nom, prenom, clubName, type));
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("%-14s %-15s %-15s %-10s",nom, prenom, clubName, type));
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean ret = false;
+//        if (o == null || getClass() != o.getClass()) return false;
+        Participant p = (Participant) o;
+        return Objects.equals(nom, p.nom) && Objects.equals(prenom, p.prenom) && Objects.equals(id, p.id);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nom.hashCode();
+        result = 31 * result + prenom.hashCode();
+        result = 31 * result + id.hashCode();
+        return result;
+//        return Objects.hash(name, prenom, naissance, taille);
+    }
+
 }

@@ -1,5 +1,6 @@
 package be.technifutur.Ui;
 
+import be.technifutur.AppInfo;
 import be.technifutur.Dsg;
 import be.technifutur.Model.*;
 import be.technifutur.Service.StageService;
@@ -24,21 +25,6 @@ public class ConsoleUi {
         boolean running = true;
 
         while (running) {
-//            System.out.println(Design.ANSI_PURPLE+"\n========================================\n" +
-//                                                  "============ MENU AIKIDOGO ============="+Design.ANSI_RESET);
-//            System.out.println(Design.ANSI_RED+"0. Quitter"+Design.ANSI_RESET);
-//            System.out.println(Design.ANSI_GREEN+"1. Charger fichier");
-//            System.out.println("2. ENREGISTRE LES DONNEES"+Design.ANSI_RESET);
-//
-//            System.out.println("----------------------------------------\n3. Définir les tarifs");
-//            System.out.println("4. Ajouter un participant");
-//            System.out.println("5. Créer une plage");
-//            System.out.println("6. Inscrire un participant à une plage");
-//            System.out.println("7. Affecter un animateur à une plage");
-//            System.out.println("8. Afficher participants et inscriptions");
-//            System.out.println("9. Calculer le prix d'un participant");
-//            System.out.println("10.Voir les tarifs");
-//            System.out.println(Design.ANSI_PURPLE+"========================================"+Design.ANSI_RESET);
             System.out.println(Dsg.pu +"\n┌────────────────────────────────────────┐\n" +
                                          "│============  MENU AIKIDOGO  ===========│"+ Dsg.r);
             System.out.println(Dsg.pu+"├────────────────────────────────────────┤"+Dsg.r);
@@ -55,12 +41,13 @@ public class ConsoleUi {
             System.out.println("├────────────────────────────────────────┤");
             System.out.println("│"+ Dsg.wh +"c. Calculer le prix d'un participant"+ Dsg.pu+"    │");
             System.out.println("│"+ Dsg.wh +"a. Afficher participants et inscriptions"+ Dsg.pu+"│");
-            System.out.println("│"+ Dsg.wh +"t. Voir les tarifs"+ Dsg.pu+"                      │");
+            System.out.println("│"+ Dsg.wh +"r. Voir les tarifs"+ Dsg.pu+"                      │");
+            System.out.println("├────────────────────────────────────────┤");
+            System.out.println(Dsg.pu+"│"+ Dsg.wh +"f. Menu modification"+ Dsg.pu +"                    │");
             System.out.println(Dsg.pu +"└────────────────────────────────────────┘"+ Dsg.r);
 
             System.out.print("Choix : ");
-            String choix = scanner.nextLine();
-//            scanner.nextLine();
+            String choix = scanner.nextLine().toLowerCase();
 
             switch (choix) {
                 case "0" -> running = false;
@@ -75,7 +62,9 @@ public class ConsoleUi {
 
                 case "c" -> calculerPrix();
                 case "a" -> afficherInscriptions();
-                case "t" -> afficherTarif();
+                case "r" -> afficherTarif();
+
+                case "f" -> service.menuEdit(data);
                 default -> System.out.println(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
             }
         }
@@ -242,7 +231,7 @@ public class ConsoleUi {
     private Participant choisirParticipant() {
         List<Participant> participants = data.getParticipants();
         if (participants.isEmpty()) {
-            System.out.print(Dsg.re +"AUNCUN PARTICIPANT !"+ Dsg.r);
+            System.out.print(Dsg.re +"❌ AUNCUN PARTICIPANT !"+ Dsg.r);
             return null;
         }
 
@@ -264,7 +253,7 @@ public class ConsoleUi {
     private Plage choisirPlage() {
         List<Plage> plages = data.getPlages();
         if (plages.isEmpty()) {
-            System.out.println("AUCUNE PLAGE !");
+            System.out.println("❌ AUCUNE PLAGE !");
             return null;
         }
 

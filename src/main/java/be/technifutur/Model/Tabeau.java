@@ -28,14 +28,15 @@ public class Tabeau {
         String endU="┐\n";
         String startDw="└";
         String endD="┘\n";
+        String resetColor= color.isBlank()? Dsg.r : color;
 
         ret+=color+startU+midLine+endU;
         for(String part : parts){
             int p= part.length();
             int insideLen = tabLen-p;
             int offset= (insideLen%2)==1?1:0;
-
-            ret+=String.format("│"+ " ".repeat(insideLen/2)+"%s"+ " ".repeat(insideLen/2+offset)+"│\n",part);
+            String redColor = part.contains("0. Quitter")? Dsg.re:"";
+            ret+=String.format("│"+ redColor+" ".repeat(insideLen/2)+"%s"+ " ".repeat(insideLen/2+offset)+resetColor+"│\n",part);
         }
             ret+=startDw+midLine+endD+ Dsg.r;
         return ret;

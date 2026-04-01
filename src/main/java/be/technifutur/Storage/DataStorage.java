@@ -32,7 +32,6 @@ public class DataStorage {
         try {
             FileWriter writer = new FileWriter(file);
             json.toJson(obj, writer);
-            //System.out.printf("\n%s saved to JSON in %s\n",obj.getClass().getSimpleName(),file.getPath());
             System.out.printf(Dsg.re +"✅ DATA ENREGISTRER DANS %s"+ Dsg.r,file.getPath());
             writer.close();
         } catch (IOException e) {
@@ -41,13 +40,8 @@ public class DataStorage {
     }
 
     public static StageData load(){
-//        try (FileReader reader = new FileReader(filename)) {
-//            return json.fromJson(reader, StageData.class);
-//        } catch (IOException e) {
-//            System.out.print(Design.ANSI_RED+"❌ FICHIER NON TROUVE"+Design.ANSI_RESET);
-//            return new StageData();
-//        }
         sb = new StringBuilder();
+        boolean running = true;
         Scanner  scanner  = new Scanner(System.in);
         StageData data = new StageData();
         File folder = new File("./mydata/");
@@ -56,55 +50,54 @@ public class DataStorage {
         if (files == null || files.length == 0) {
             System.out.print(Dsg.re +"❌ AUNCUN FICHIER TROUVE !"+ Dsg.r);
             data = new StageData();
-//            return;
         }
 
-        String title = "=== Choisissez un fichier ===*";
-        sb.append("=== Choisissez un fichier ===*");
-        sb.append("0. Nouveau fichier*");
-        for (int i = 0; i < files.length; i++) {
-            sb.append((i + 1) + ". " + files[i].getName()+"*");
-        }
-        System.out.println(Tabeau.displayInbox("",sb));
-        sb.setLength(0);
-//        System.out.println("=== Choisissez un fichier ===");
-//        System.out.println("0. Nouveau fichier");
-//
-//        for (int i = 0; i < files.length; i++) {
-//            System.out.println((i + 1) + ". " + files[i].getName());
-//        }
+        while(running)
+        {
+            String title = "=== Choisissez un fichier ===*";
+            sb.append("=== Choisissez un fichier ===*");
+            sb.append("0. Quitter*");
+            sb.append("1. Nouveau fichier*");
+            for (int i = 0; i < files.length; i++) {
+                sb.append((i + 2) + ". " + files[i].getName()+"*");
+            }
+            System.out.print(Tabeau.displayInbox("",sb));
+            sb.setLength(0);
 
-        System.out.print("Choix : ");
-        int choix = -1;
-        String input = scanner.nextLine();
-        //test si l entree est un digit
-        if (input.matches("\\d+")) {
-            choix = Integer.parseInt(input);
-        } else {
-//            System.out.println(Dsg.re+Dsg.bo+"⛔⛔⛔ LE CHOIX DOIT ETRE UN NUMERO ⛔⛔⛔"+Dsg.r);
-            sb.append(" LE CHOIX DOIT ETRE UN NUMERO "+"*");
-        }
-
-        if (choix == 0) {
-            data = new StageData();
-            System.out.print(Dsg.re +"✅ NOUVEAU STAGE CREE."+ Dsg.r);
-        }
-
-        if (choix < 1 || choix > files.length) {
-//            System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+Dsg.r);
-            sb.append(" CHOIX INVALIDE! "+"*");
-            System.out.print(Tabeau.displayInbox(Dsg.re+Dsg.bo,sb));
-        }else{
-    //        data = DataStorage.load(files[choix - 1].getPath());
-            try (FileReader reader = new FileReader(files[choix - 1].getPath())) {
-                data = json.fromJson(reader, StageData.class);
-            } catch (IOException e) {
-//                System.out.print(Dsg.re +"❌ FICHIER NON TROUVE, UN NOUVEAU SERA CREE"+ Dsg.r);
-                sb.append(" FICHIER NON TROUVE, UN NOUVEAU SERA CREE "+"*");
-                System.out.println(Tabeau.displayInbox(Dsg.re+Dsg.bo,sb));
+            System.out.print("Choix : ");
+            int choix = 0;
+            String input = scanner.nextLine();
+            //test si l entree est un digit
+            if (input.matches("\\d+")) {
+                choix = Integer.parseInt(input);
+            } else {
+    //            System.out.println(Dsg.re+Dsg.bo+"⛔⛔⛔ LE CHOIX DOIT ETRE UN NUMERO ⛔⛔⛔"+Dsg.r);
+                sb.append(" LE CHOIX DOIT ETRE UN NUMERO "+"*");
             }
 
-            System.out.printf(Dsg.re +"✅ FICHIER CHARGE : %s"+ Dsg.r, files[choix - 1].getName());
+            if (choix == 1) {
+                data = new StageData();
+                System.out.print(Dsg.re +"✅ NOUVEAU STAGE CREE.\n"+ Dsg.r);
+                running = false;
+            }else if(choix == 0)
+            {
+                running = false;
+            }else{
+                if (choix < 1 || choix > files.length) {
+                    sb.append(" CHOIX INVALIDE! "+"*");
+                    System.out.print(Tabeau.displayInbox(Dsg.re+Dsg.bo,sb));
+                }else{
+                    try (FileReader reader = new FileReader(files[choix - 2].getPath())) {
+                        data = json.fromJson(reader, StageData.class);
+                    } catch (IOException e) {
+                        sb.append(" FICHIER NON TROUVE, UN NOUVEAU SERA CREE "+"*");
+                        System.out.println(Tabeau.displayInbox(Dsg.re+Dsg.bo,sb));
+                    }
+
+                    System.out.printf(Dsg.re +"✅ FICHIER CHARGE : %s"+ Dsg.r, files[choix - 2].getName());
+                    running = false;
+                }
+            }
         }
         return data;
     }
