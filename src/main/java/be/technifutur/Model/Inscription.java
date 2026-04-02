@@ -39,17 +39,12 @@ public class Inscription  implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(participant.toString());
-        sb.append("     🍔Souper :");
-        sb.append(getSouper() ? "✅":"❌");
-        sb.append("   🏦Logement :");
-        sb.append(getLogement() ? "✅":"❌");
+        sb.append(participant.toString()).append("     🍔Souper :").append(getSouper() ? "✅":"❌")
+                .append(" 🏦Logement :").append(getLogement() ? "✅":"❌").append("  ➖  🕛");
 
-        sb.append("    ➖   🕛 ");
         for(Plage p : plages) {
-            sb.append(p.toString());
+            sb.append(p.toString()).append(" ");
         }
-
         return sb.toString();
     }
 

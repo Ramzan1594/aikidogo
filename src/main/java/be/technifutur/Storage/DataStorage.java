@@ -54,9 +54,8 @@ public class DataStorage {
         while(running)
         {
             String title = "=== Choisissez un fichier ===*";
-            sb.append("=== Choisissez un fichier ===*");
-            sb.append("0. Quitter*");
-            sb.append("1. Nouveau fichier*");
+            sb.append("=== Choisissez un fichier ===*").append("0. Quitter*").append("1. Nouveau fichier*");
+
             for (int i = 0; i < files.length; i++) {
                 sb.append((i + 2) + ". " + files[i].getName()+"*");
             }

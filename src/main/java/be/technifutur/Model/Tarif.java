@@ -39,11 +39,9 @@ public class Tarif implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("======= TARIFS =======*");
-        sb.append(String.format("Plages : %.2f€*", this.pPlage));
-        sb.append(String.format("Souper : %.2f€*", this.pSouper));
-        sb.append(String.format("Logement : %.2f€*", this.pLogement));
-        sb.append(String.format("Full : %.2f€*", this.pFullPlages));
+        sb.append("======= TARIFS =======*").append(String.format("Plages : %.2f€*", this.pPlage))
+        .append(String.format("Souper : %.2f€*", this.pSouper)).append(String.format("Logement : %.2f€*", this.pLogement))
+        .append(String.format("Full : %.2f€*", this.pFullPlages));
 
         return Tabeau.displayInbox("", sb);
     }

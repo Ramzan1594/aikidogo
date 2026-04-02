@@ -40,12 +40,9 @@ public class StageService implements Serializable {
         boolean running = true;
         while(running){
             StringBuilder sb = new StringBuilder();
-            sb.append("==== MODIFICATION ====*");
-            sb.append("0. Quitter*");
-            sb.append("1. Participant*");
-            sb.append("2. Plages*");
-            sb.append("3. Tafifs*");
-            sb.append("4. Inscriptions*");
+            sb.append("==== MODIFICATION ====*").append("0. Quitter*").append("1. Participant*")
+                .append("2. Plages*").append("3. Tafifs*").append("4. Inscriptions*");
+
             System.out.print(Tabeau.displayInbox("",sb));
             sb.setLength(0);
 
@@ -88,22 +85,29 @@ public class StageService implements Serializable {
                     while(inRunning && running){
                         System.out.printf("Etat actuel de l'inscription\n%s\n",ins.get(posIns).toString());
                         StringBuilder sb = new StringBuilder();
-                        sb.append("Que desirez vous modifier ?*");
-                        sb.append("0. Quitter.*");
-                        sb.append("1. Ajouter plages.*");
-                        sb.append("2. Supprimer plages.*");
-                        sb.append("3. Souper.*");
-                        sb.append("4. Logement*");
+                        sb.append("Que desirez vous modifier ?*")
+                        .append("0. Quitter.*").append("1. Ajouter plages.*").append("2. Supprimer plages.*")
+                        .append("3. Souper.*").append("4. Logement*");
+
                         System.out.print(Tabeau.displayInbox("",sb));
                         sb.setLength(0);
 
                         System.out.print("Choix :");
-                        int inChoix =  scan.nextInt();
+                        String inChoix =  scan.nextLine();
+                        int choixMod = Integer.parseInt(inChoix);
 
-                        switch (inChoix){
+                        switch (choixMod){
                             case 0 -> inRunning = false;
                             case 1 -> {
+                                listPl = listPl.stream()
+                                        .filter(p->!ins.get(posIns).getPlages().contains(p))
+                                        .toList();
+
+                                if(listPl.isEmpty())
+                                    throw new Exception(Dsg.re+Dsg.bo+String.format("❌ Aucune autre plage disponible pour %s!",ins.get(posIns).getParticipant().getNom())+ Dsg.r);
+
                                 System.out.println("Selectionner la plage a ajouté : ");
+
                                 for (int i = 0; i < listPl.size(); i++) {
                                     System.out.printf("%-4d %s\n",i+1,listPl.get(i).toString());
                                 }
@@ -118,7 +122,7 @@ public class StageService implements Serializable {
                                 }
                                 System.out.print("Choix :");
                                 int posPl = scan.nextInt()-1;
-                                ins.get(posIns).removePlage(listPl.get(posPl));
+                                ins.get(posIns).removePlage(ins.get(posIns).getPlages().get(posPl));
                             }
                             case 3 -> {
                                 System.out.println("Changer le souper : 1.oui - 2.non");
@@ -168,13 +172,8 @@ public class StageService implements Serializable {
                     while(inRunning && running){
                         System.out.printf("Etat actuel de la plage\n%s\n",listPl.get(posListPl).toString());
                         StringBuilder sb = new StringBuilder();
-                        sb.append("Que desirez vous modifier ?*");
-                        sb.append("0. Quitter.*");
-                        sb.append("1. Nom.*");
-                        sb.append("2. Jour.*");
-                        sb.append("3. Heure de début*");
-                        sb.append("4. Heure de fin.*");
-                        sb.append("4. Animateur.*");
+                        sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Nom.*").append("2. Jour.*")
+                                .append("3. Heure de début*").append("4. Heure de fin.*").append("4. Animateur.*");
 
                         System.out.print(Tabeau.displayInbox("",sb));
                         sb.setLength(0);
@@ -246,12 +245,8 @@ public class StageService implements Serializable {
                     while(inRunning && running){
                         System.out.printf("Etat actuel du participan\n%s\n",listP.get(posListPar).toString());
                         StringBuilder sb = new StringBuilder();
-                        sb.append("Que desirez vous modifier ?*");
-                        sb.append("0. Quitter.*");
-                        sb.append("1. Nom.*");
-                        sb.append("2. Prenom.*");
-                        sb.append("3. Club*");
-                        sb.append("4. Type.*");
+                        sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Nom.*")
+                        .append("2. Prenom.*").append("3. Club*").append("4. Type.*");
 
                         System.out.println(Tabeau.displayInbox("",sb));
                         sb.setLength(0);
@@ -301,12 +296,8 @@ public class StageService implements Serializable {
             while(running){
                 System.out.printf("Voici les tarifs actuels\n%s",dbTarif.toString());
                 StringBuilder sb = new StringBuilder();
-                sb.append("Que desirez vous modifier ?*");
-                sb.append("0. Quitter.*");
-                sb.append("1. Prix plage.*");
-                sb.append("2. Prix souper.*");
-                sb.append("3. Prix logement.*");
-                sb.append("4. Prix full.*");
+                sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Prix plage.*")
+                .append("2. Prix souper.*").append("3. Prix logement.*").append("4. Prix full.*");
 
                 System.out.print(Tabeau.displayInbox("",sb));
                 sb.setLength(0);

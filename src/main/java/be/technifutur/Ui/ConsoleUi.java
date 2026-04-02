@@ -238,13 +238,16 @@ public class ConsoleUi {
 
     private void afficherInscriptions() {
         System.out.println(Dsg.re +"\n=== Participants ==="+ Dsg.r);
-        System.out.println(String.format("%-15s %-15s %-15s %-10s%n","Nom", "Prénom", "Club", "Type"));
+        System.out.println(String.format("%-14s %-15s %-15s %-10s","Nom", "Prénom", "Club", "Type"));
+        System.out.println("──────────────────────────────────────────────────────────");
         for (Participant p : data.getParticipants()) {
             System.out.println(p.toString());
         }
 
         System.out.println(Dsg.re +"\n=== Inscriptions ==="+ Dsg.r);
-        System.out.println(String.format("%-15s %-15s %-15s %-14s %-37s %-48s %-10s%n","Nom", "Prénom", "Club", "Type", "🍔Souper/🏦Logement","🕛 Plages","👤Animateur"));
+        System.out.println(String.format("%-15s %-15s %-15s %-13s %-33s %-45s %-10s","Nom", "Prénom", "Club", "Type", "🍔Souper/🏦Logement","🕛 Plages","🥋Animateur"));
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────" +
+                "───────────────────────────────────────────────────────────────────────");
         for (Inscription i : data.getInscriptions()) {
             System.out.println(i.toString());
         }
