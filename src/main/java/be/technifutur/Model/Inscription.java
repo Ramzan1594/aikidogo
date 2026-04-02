@@ -3,6 +3,7 @@ package be.technifutur.Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Inscription  implements Serializable {
     private Participant participant;
@@ -22,16 +23,17 @@ public class Inscription  implements Serializable {
 //        }
         plages.add(p);
     }
+    public void removePlage(Plage p) {
+        plages.remove(p);
+    }
 
     public Participant getParticipant() {return participant;}
     public List<Plage> getPlages() {return plages;}
+    public boolean getSouper() { return souper; }
+    public boolean getLogement() { return logement; }
 
     //pour chaque inscription on inscit ou non a un souper
-    public boolean isSouper() { return souper; }
     public void setSouper(boolean souper) { this.souper = souper; }
-
-    //pour chaque inscription on inscit ou non pour un logement
-    public boolean isLogement() { return logement; }
     public void setLogement(boolean logement) { this.logement = logement; }
 
     @Override
@@ -39,9 +41,9 @@ public class Inscription  implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append(participant.toString());
         sb.append("     🍔Souper :");
-        sb.append(isSouper() ? "✅":"❌");
+        sb.append(getSouper() ? "✅":"❌");
         sb.append("   🏦Logement :");
-        sb.append(isLogement() ? "✅":"❌");
+        sb.append(getLogement() ? "✅":"❌");
 
         sb.append("    ➖   🕛 ");
         for(Plage p : plages) {

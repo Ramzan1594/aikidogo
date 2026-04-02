@@ -15,9 +15,9 @@ public class DataStorage {
     private static Gson json = new GsonBuilder()
             .setPrettyPrinting() // nice formatted JSON
             .create();
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void save(Object obj) {
-        Scanner scanner  = new Scanner(System.in);
         System.out.print("Entree le nom du ficher à enregistrée : ");
         String fileName = scanner.nextLine();
 
@@ -42,10 +42,9 @@ public class DataStorage {
     public static StageData load(){
         sb = new StringBuilder();
         boolean running = true;
-        Scanner  scanner  = new Scanner(System.in);
         StageData data = new StageData();
         File folder = new File("./mydata/");
-        File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
+        File[] files = folder.listFiles((dir, name) -> name.endsWith(".json")  && !name.equals("appVersion.json"));
 
         if (files == null || files.length == 0) {
             System.out.print(Dsg.re +"❌ AUNCUN FICHIER TROUVE !"+ Dsg.r);

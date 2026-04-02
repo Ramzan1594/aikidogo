@@ -192,22 +192,8 @@ public class ConsoleUi {
         if (p == null) return;
         Participant animateur = choisirParticipant();
         if (animateur == null) return;
-        p.setAnimateur(animateur);
+            p.setAnimateur(animateur);
         System.out.printf(Dsg.re +"✅ ANIMATEUR %s AFFECTE à %s"+ Dsg.r,animateur.toString() , p.getNom());
-    }
-
-    private void afficherInscriptions() {
-        System.out.println(Dsg.re +"\n=== Participants ==="+ Dsg.r);
-        System.out.println(String.format("%-15s %-15s %-15s %-10s%n","Nom", "Prénom", "Club", "Type"));
-        for (Participant p : data.getParticipants()) {
-            System.out.println(p.toString());
-        }
-
-        System.out.println(Dsg.re +"\n=== Inscriptions ==="+ Dsg.r);
-        System.out.println(String.format("%-15s %-15s %-15s %-14s %-37s %-48s %-10s%n","Nom", "Prénom", "Club", "Type", "🍔Souper/🏦Logement","🕛 Plages","👤Animateur"));
-        for (Inscription i : data.getInscriptions()) {
-            System.out.println(i.toString());
-        }
     }
 
     private void calculerPrix() {
@@ -248,6 +234,20 @@ public class ConsoleUi {
             return null;
         }
         return participants.get(num - 1);
+    }
+
+    private void afficherInscriptions() {
+        System.out.println(Dsg.re +"\n=== Participants ==="+ Dsg.r);
+        System.out.println(String.format("%-15s %-15s %-15s %-10s%n","Nom", "Prénom", "Club", "Type"));
+        for (Participant p : data.getParticipants()) {
+            System.out.println(p.toString());
+        }
+
+        System.out.println(Dsg.re +"\n=== Inscriptions ==="+ Dsg.r);
+        System.out.println(String.format("%-15s %-15s %-15s %-14s %-37s %-48s %-10s%n","Nom", "Prénom", "Club", "Type", "🍔Souper/🏦Logement","🕛 Plages","👤Animateur"));
+        for (Inscription i : data.getInscriptions()) {
+            System.out.println(i.toString());
+        }
     }
 
     private Plage choisirPlage() {
