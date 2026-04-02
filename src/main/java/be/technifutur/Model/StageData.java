@@ -1,6 +1,8 @@
 package be.technifutur.Model;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 //REGROUPEMENT DE TOUS LES DATAS
@@ -11,14 +13,18 @@ public class StageData implements Serializable {
     private List<Participant> participants = new ArrayList<>();
     private List<Inscription> inscriptions = new ArrayList<>();
     private List<Plage>  plages = new ArrayList<>();
-    private Tarif tarif;
+    private HashMap<Integer,Tarif> tarifs = new HashMap<>();
 
     public List<Participant> getParticipants() {return participants;}
     public List<Inscription> getInscriptions() {return inscriptions;}
     public List<Plage> getPlages() {return plages;}
-    public Tarif getTarif() {return tarif;}
+    public HashMap<Integer,Tarif> getTarifs() {return tarifs;}
 
-    public void setTarif(Tarif tarif) {this.tarif = tarif;}
+    public void setTarif(Tarif tarif) {
+        int nextId = tarifs.size() == 0 ? 1: Collections.max(tarifs.keySet())+1;
+        tarif.setId(nextId);
+        this.tarifs.put(nextId, tarif);
+    }
 
     public String toString(Inscription ins,double prix){
         //get the participant in the list

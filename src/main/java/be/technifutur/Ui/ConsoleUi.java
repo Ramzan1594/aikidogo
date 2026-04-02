@@ -1,11 +1,11 @@
 package be.technifutur.Ui;
 
-import be.technifutur.AppInfo;
 import be.technifutur.Dsg;
 import be.technifutur.Model.*;
 import be.technifutur.Service.StageService;
 import be.technifutur.Storage.DataStorage;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -83,6 +83,9 @@ public class ConsoleUi {
 
         System.out.println("=== Définition des tarifs ===");
 
+        System.out.print("Nom du tarif : ");
+        String nom = scanner.nextLine();
+
         System.out.print("Prix par plage : ");
         double prixPlage = scanner.nextDouble();
 
@@ -97,17 +100,20 @@ public class ConsoleUi {
 
         scanner.nextLine(); // vider buffer
 
-        Tarif tarif = new Tarif(prixPlage, prixSouper, prixLogement, prixFull);
+        Tarif tarif = new Tarif(nom, prixPlage, prixSouper, prixLogement, prixFull);
         data.setTarif(tarif);
 
         System.out.print(Dsg.re +"✅ TARIFS ENREGISTREES !"+ Dsg.r);
     }
 
     private void afficherTarif() {
-        if (data.getTarif() == null) {
+        if (data.getTarifs() == null) {
             System.out.print(Dsg.re +"AUNCUN TARIF DEFINI."+ Dsg.r);
         } else {
-            System.out.print(data.getTarif().toString());
+            for (Tarif t : data.getTarifs().values())
+            {
+                System.out.println(t.toString());
+            }
         }
     }
 
@@ -126,7 +132,7 @@ public class ConsoleUi {
         System.out.print("Type (MINEUR, NORMAL, ANIMATEUR) : ");
         ETypeParticipant type = ETypeParticipant.valueOf(scanner.nextLine().toUpperCase());
 
-        Participant p = new Participant(type,club, email, tel,prenom, nom);
+        Participant p = new Participant(club, email, tel,prenom, nom);
         data.getParticipants().add(p);
         System.out.printf(Dsg.re +"✅ PARTICIPANT AJOUTE : %s"+ Dsg.r, p.toString());
     }
@@ -210,7 +216,7 @@ public class ConsoleUi {
             return;
         }
 
-        double prix = service.calculerPrix(insc, data.getTarif(), data.getPlages().size());
+        double prix = service.calculerPrix(insc, insc.getTarif(), data.getPlages().size());
         System.out.printf(Dsg.re +"PRIX TOTAL POUR %s : %.2f"+ Dsg.r, p.toString() , prix);
     }
 

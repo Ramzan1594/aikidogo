@@ -4,6 +4,7 @@ import be.technifutur.Dsg;
 import be.technifutur.Model.*;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,7 +32,7 @@ public class StageService implements Serializable {
             if(ins.getLogement())
                 total += t.getpLogement();
 
-            total *= ins.getParticipant().getType().getCoefficient();
+//            total *= ins.getParticipant().getType().getCoefficient();
         }
         return total;
     }
@@ -53,7 +54,7 @@ public class StageService implements Serializable {
                 case "0" -> running = false;
                 case "1" -> editParticipant(data.getParticipants());
                 case "2" -> editPlages(data.getPlages(),data.getParticipants());
-                case "3" -> editTarifs(data.getTarif());
+                case "3" -> editTarifs(data.getTarifs());
                 case "4" -> editInscription(data.getInscriptions(), data.getPlages());
             }
         }
@@ -271,8 +272,8 @@ public class StageService implements Serializable {
                             }
                             case 4 -> {
                                 System.out.print("Nouveau type : ");
-                                listP.get(posListPar).setType(ETypeParticipant.
-                                        valueOf(newInput.nextLine().toUpperCase()));
+//                                listP.get(posListPar).setType(ETypeParticipant.
+//                                        valueOf(newInput.nextLine().toUpperCase()));
                             }
                             default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
                         }
@@ -287,14 +288,23 @@ public class StageService implements Serializable {
     }
 
     //function qui modifie un tarif existant
-    private void editTarifs(Tarif dbTarif) {
-        if(dbTarif != null)
+    private void editTarifs(HashMap<Integer,Tarif> dbTarifs) {
+        if(dbTarifs != null)
         {
-            Tarif newTafif = new Tarif(dbTarif);
+            System.out.println("Selectionner un tarif");
+            for(Tarif tarif : dbTarifs.values()){
+                System.out.println(tarif.getId()+"."+tarif.toString());
+            }
+
+            System.out.println("Choix :");
+            String choix = scan.nextLine();
+            int ch = Integer.parseInt(choix);
+
+            Tarif tarif = dbTarifs.get(ch);
             boolean running = true;
 
             while(running){
-                System.out.printf("Voici les tarifs actuels\n%s",dbTarif.toString());
+                System.out.printf("Voici les tarifs actuels\n%s",tarif.toString());
                 StringBuilder sb = new StringBuilder();
                 sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Prix plage.*")
                 .append("2. Prix souper.*").append("3. Prix logement.*").append("4. Prix full.*");
@@ -303,7 +313,7 @@ public class StageService implements Serializable {
                 sb.setLength(0);
 
                 System.out.print("Choix :");
-                String choix = scan.nextLine();
+                choix = scan.nextLine();
 
                 if(choix.equals("0"))
                     running = false;
@@ -312,19 +322,19 @@ public class StageService implements Serializable {
                     case "0" -> running = false;
                     case "1"->{
                         System.out.print("Nouveau prix plage : ");
-                        dbTarif.setpPlage(scan.nextDouble());
+                        tarif.setpPlage(scan.nextDouble());
                     }
                     case "2"->{
                         System.out.print("Nouveau prix souper : ");
-                        dbTarif.setpSouper(scan.nextDouble());
+                        tarif.setpSouper(scan.nextDouble());
                     }
                     case "3"->{
                         System.out.print("Nouveau prix logement: ");
-                        dbTarif.setpLogement(scan.nextDouble());
+                        tarif.setpLogement(scan.nextDouble());
                     }
                     case "4"->{
                         System.out.print("Nouveau prix full: ");
-                        dbTarif.setpFullPlages(scan.nextDouble());
+                        tarif.setpFullPlages(scan.nextDouble());
                     }
                     default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
                 }

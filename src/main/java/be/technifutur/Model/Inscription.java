@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Inscription  implements Serializable {
     private Participant participant;
     private List<Plage> plages = new ArrayList<>();
+    private Tarif tarif;
 
     private boolean souper;
     private boolean logement;
@@ -31,8 +32,10 @@ public class Inscription  implements Serializable {
     public List<Plage> getPlages() {return plages;}
     public boolean getSouper() { return souper; }
     public boolean getLogement() { return logement; }
+    public Tarif getTarif() {return tarif;}
 
     //pour chaque inscription on inscit ou non a un souper
+    public void setTarif(Tarif tarif) {this.tarif = tarif;}
     public void setSouper(boolean souper) { this.souper = souper; }
     public void setLogement(boolean logement) { this.logement = logement; }
 
