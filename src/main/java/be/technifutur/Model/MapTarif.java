@@ -10,7 +10,7 @@ public class MapTarif {
     public void addTarif(int id, Tarif tarif) {
         mapTarif.put(id, tarif);
     }
-
+    public Map<Integer, Tarif> getMapTarif() {return mapTarif;}
     public Tarif getTarif(int id) {
         return mapTarif.get(id);
     }

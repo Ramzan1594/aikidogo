@@ -1,9 +1,6 @@
 package be.technifutur.Model;
 
-import be.technifutur.Dsg;
-
 import java.io.Serializable;
-import java.lang.classfile.instruction.TableSwitchInstruction;
 
 public class Tarif implements Serializable {
     private int id;
@@ -13,6 +10,7 @@ public class Tarif implements Serializable {
     private double pLogement;
     private double pFullPlages;
 
+    public Tarif(){}
     public Tarif(Tarif t){
         this.id = t.id;
         this.nom = t.nom;
@@ -21,7 +19,8 @@ public class Tarif implements Serializable {
         this.pLogement = t.pLogement;
         this.pFullPlages = t.pFullPlages;
     }
-    public Tarif(String nom, double pPlage, double pLogement, double pSouper, double pFull) {
+    public Tarif(int id, String nom, double pPlage, double pLogement, double pSouper, double pFull) {
+        this.id = id;
         this.nom = nom;
         this.pPlage = pPlage;
         this.pSouper = pSouper;
@@ -52,8 +51,6 @@ public class Tarif implements Serializable {
         .append(String.format("Souper : %.2f€*", this.pSouper)).append(String.format("Logement : %.2f€*", this.pLogement))
         .append(String.format("Full : %.2f€*", this.pFullPlages));
 
-        return Tabeau.displayInbox("", sb);
+        return Tableau.displayInbox("", sb);
     }
-
-
 }

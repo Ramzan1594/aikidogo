@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Inscription  implements Serializable {
-    private Participant participant;
+    private Participant participant = new Participant();
     private List<Plage> plages = new ArrayList<>();
-    private Tarif tarif;
+    private Tarif tarif = new Tarif();
 
     private boolean souper;
     private boolean logement;
@@ -41,14 +41,34 @@ public class Inscription  implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(participant.toString()).append("     🍔Souper :").append(getSouper() ? "✅":"❌")
-                .append(" 🏦Logement :").append(getLogement() ? "✅":"❌").append("  ➖  🕛");
+        return
+                String.format(
+                    "%-20s %-12s Souper:%-1s Logement:%-4s %-1s",
+                    participant.toString(),
+                    tarif.getNom(),
+                    getSouper() ? "✅":"❌",
+                    getLogement() ? "✅":"❌",
+                    getPlagesAsString()
 
-        for(Plage p : plages) {
+                );
+
+//        sb.append(participant.toString()+" "+tarif.getNom()).append("🍔Souper :").append(getSouper() ? "✅":"❌")
+//                .append(" 🏦Logement :").append(getLogement() ? "✅":"❌").append("  ➖  ");
+//
+//        for(Plage p : plages) {
+//            sb.append(p.toString());
+//        }
+//        return sb.toString();
+    }
+
+    private String getPlagesAsString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (Plage p : plages) {
             sb.append(p.toString()).append(" ");
         }
-        return sb.toString();
+
+        return sb.toString().trim();
     }
 
 }

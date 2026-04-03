@@ -13,18 +13,13 @@ public class StageData implements Serializable {
     private List<Participant> participants = new ArrayList<>();
     private List<Inscription> inscriptions = new ArrayList<>();
     private List<Plage>  plages = new ArrayList<>();
-    private HashMap<Integer,Tarif> tarifs = new HashMap<>();
+    private HashMap<Integer,Tarif> allTarifs = new HashMap<>();
 
     public List<Participant> getParticipants() {return participants;}
-    public List<Inscription> getInscriptions() {return inscriptions;}
     public List<Plage> getPlages() {return plages;}
-    public HashMap<Integer,Tarif> getTarifs() {return tarifs;}
-
-    public void setTarif(Tarif tarif) {
-        int nextId = tarifs.size() == 0 ? 1: Collections.max(tarifs.keySet())+1;
-        tarif.setId(nextId);
-        this.tarifs.put(nextId, tarif);
-    }
+    public HashMap<Integer,Tarif> getAllTarifs() {return allTarifs;}
+    public int getNbrTarifs() {return allTarifs.size()==0?1:allTarifs.size()+1;}
+    public List<Inscription> getInscriptions() {return inscriptions;}
 
     public String toString(Inscription ins,double prix){
         //get the participant in the list

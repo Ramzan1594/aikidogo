@@ -2,7 +2,7 @@ package be.technifutur.Storage;
 
 import be.technifutur.Dsg;
 import be.technifutur.Model.StageData;
-import be.technifutur.Model.Tabeau;
+import be.technifutur.Model.Tableau;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -59,10 +59,10 @@ public class DataStorage {
             for (int i = 0; i < files.length; i++) {
                 sb.append((i + 2) + ". " + files[i].getName()+"*");
             }
-            System.out.print(Tabeau.displayInbox("",sb));
+            System.out.print(Tableau.displayInbox("",sb));
             sb.setLength(0);
 
-            System.out.print("Choix : ");
+            System.out.print("\nChoix : ");
             int choix = 0;
             String input = scanner.nextLine();
             //test si l entree est un digit
@@ -81,15 +81,15 @@ public class DataStorage {
             {
                 running = false;
             }else{
-                if (choix < 1 || choix > files.length) {
+                if (choix < 2 || choix-1 > files.length) {
                     sb.append(" CHOIX INVALIDE! "+"*");
-                    System.out.print(Tabeau.displayInbox(Dsg.re+Dsg.bo,sb));
+                    System.out.print(Tableau.displayInbox(Dsg.re+Dsg.bo,sb));
                 }else{
                     try (FileReader reader = new FileReader(files[choix - 2].getPath())) {
                         data = json.fromJson(reader, StageData.class);
                     } catch (IOException e) {
                         sb.append(" FICHIER NON TROUVE, UN NOUVEAU SERA CREE "+"*");
-                        System.out.println(Tabeau.displayInbox(Dsg.re+Dsg.bo,sb));
+                        System.out.println(Tableau.displayInbox(Dsg.re+Dsg.bo,sb));
                     }
 
                     System.out.printf(Dsg.re +"✅ FICHIER CHARGE : %s"+ Dsg.r, files[choix - 2].getName());

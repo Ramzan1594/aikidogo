@@ -5,7 +5,9 @@ import be.technifutur.Model.*;
 import be.technifutur.Service.StageService;
 import be.technifutur.Storage.DataStorage;
 
-import java.util.Collections;
+import javax.swing.*;
+import java.lang.classfile.instruction.TableSwitchInstruction;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,17 +38,18 @@ public class ConsoleUi {
             System.out.println("│"+Dsg.wh+"3. Définir les tarifs"+ Dsg.pu+"                   │");
             System.out.println("│"+Dsg.wh+"4. Ajouter un participant"+ Dsg.pu+"               │");
             System.out.println("│"+ Dsg.wh +"5. Créer une plage"+ Dsg.pu+"                      │");
-            System.out.println("│"+ Dsg.wh +"6. Inscrire un participant à une plage"+ Dsg.pu+"  │");
-            System.out.println("│"+ Dsg.wh +"7. Affecter un animateur à une plage"+ Dsg.pu+"    │");
+            System.out.println("│"+ Dsg.wh +"6. Affecter un animateur"+ Dsg.pu+"                │");
+            System.out.println("│"+ Dsg.wh +"7. Inscrire un participant"+ Dsg.pu+"              │");
             System.out.println("├────────────────────────────────────────┤");
-            System.out.println("│"+ Dsg.wh +"c. Calculer le prix d'un participant"+ Dsg.pu+"    │");
-            System.out.println("│"+ Dsg.wh +"a. Afficher participants et inscriptions"+ Dsg.pu+"│");
-            System.out.println("│"+ Dsg.wh +"r. Voir les tarifs"+ Dsg.pu+"                      │");
+            System.out.println("│"+ Dsg.wh +"a. Calculer le prix d'un participant"+ Dsg.pu+"    │");
+            System.out.println("│"+ Dsg.wh +"z. Afficher plages"+ Dsg.pu+"                      │");
+            System.out.println("│"+ Dsg.wh +"e. Afficher participants/inscriptions"+ Dsg.pu+"   │");
+            System.out.println("│"+ Dsg.wh +"r. Afficher tarifs"+ Dsg.pu+"                      │");
             System.out.println("├────────────────────────────────────────┤");
             System.out.println(Dsg.pu+"│"+ Dsg.wh +"f. Menu modification"+ Dsg.pu +"                    │");
             System.out.println(Dsg.pu +"└────────────────────────────────────────┘"+ Dsg.r);
 
-            System.out.print("Choix : ");
+            System.out.print("\nChoix : ");
             String choix = scanner.nextLine().toLowerCase();
 
             switch (choix) {
@@ -57,16 +60,25 @@ public class ConsoleUi {
                 case "3" -> definirTarif();
                 case "4" -> ajouterParticipant();
                 case "5" -> creerPlage();
-                case "6" -> inscrireParticipant();
-                case "7" -> affecterAnimateur();
+                case "6" -> affecterAnimateur();
+                case "7" -> inscrireParticipant();
 
-                case "c" -> calculerPrix();
-                case "a" -> afficherInscriptions();
+                case "a" -> calculerPrix();
+                case "z" -> afficherPlages();
+                case "e" -> afficherInscriptions();
                 case "r" -> afficherTarif();
 
                 case "f" -> service.menuEdit(data);
                 default -> System.out.println(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
             }
+        }
+    }
+
+    private void afficherPlages() {
+        System.out.println(String.format("%-12s %-10s %-15s","🥋Animateur", "🕛Plages","Horaire"));
+        System.out.println("─────────────────────────────────────────");
+        for (int i = 0; i < data.getPlages().size(); i++) {
+            System.out.println(data.getPlages().get(i).toString());
         }
     }
 
@@ -80,37 +92,54 @@ public class ConsoleUi {
     }
 
     private void definirTarif() {
-
-        System.out.println("=== Définition des tarifs ===");
+        StringBuilder sb = new StringBuilder().append("=== Définition des tarifs ===*");
+        System.out.print(Tableau.displayInbox("",sb));
+        System.out.println(Dsg.re + "Q. Quitter\n" + Dsg.r);
 
         System.out.print("Nom du tarif : ");
         String nom = scanner.nextLine();
 
+        if (nom.equalsIgnoreCase("q")) return;
+
         System.out.print("Prix par plage : ");
-        double prixPlage = scanner.nextDouble();
+        String input = scanner.nextLine();
+        if (input.equalsIgnoreCase("q")) return;
+        double prixPlage = Double.parseDouble(input);
 
         System.out.print("Prix souper : ");
-        double prixSouper = scanner.nextDouble();
+        input = scanner.nextLine();
+        if (input.equalsIgnoreCase("q")) return;
+        double prixSouper = Double.parseDouble(input);
 
         System.out.print("Prix logement : ");
-        double prixLogement = scanner.nextDouble();
+        input = scanner.nextLine();
+        if (input.equalsIgnoreCase("q")) return;
+        double prixLogement = Double.parseDouble(input);
 
         System.out.print("Prix full (toutes les plages) : ");
-        double prixFull = scanner.nextDouble();
+        input = scanner.nextLine();
+        if (input.equalsIgnoreCase("q")) return;
+        double prixFull = Double.parseDouble(input);
 
-        scanner.nextLine(); // vider buffer
+        Tarif tarif = new Tarif(
+                data.getNbrTarifs(),
+                nom,
+                prixPlage,
+                prixSouper,
+                prixLogement,
+                prixFull
+        );
 
-        Tarif tarif = new Tarif(nom, prixPlage, prixSouper, prixLogement, prixFull);
-        data.setTarif(tarif);
+        data.getAllTarifs().put(tarif.getId(), tarif);
 
-        System.out.print(Dsg.re +"✅ TARIFS ENREGISTREES !"+ Dsg.r);
+        System.out.print(Dsg.re + "✅ TARIFS ENREGISTRÉS !" + Dsg.r);
     }
 
     private void afficherTarif() {
-        if (data.getTarifs() == null) {
+        if (data.getAllTarifs().size() == 0) {
             System.out.print(Dsg.re +"AUNCUN TARIF DEFINI."+ Dsg.r);
         } else {
-            for (Tarif t : data.getTarifs().values())
+            for (Tarif t : data.getAllTarifs().values())
             {
                 System.out.println(t.toString());
             }
@@ -119,18 +148,29 @@ public class ConsoleUi {
 
 
     private void ajouterParticipant() {
+        StringBuilder sb = new StringBuilder().append("=== Ajout participant ===*");
+        System.out.print(Tableau.displayInbox("",sb));
+        System.out.println(Dsg.re + "Q. Quitter\n" + Dsg.r);
+
         System.out.print("Nom : ");
         String nom = scanner.nextLine();
+        if (nom.equalsIgnoreCase("q")) return;
+
         System.out.print("Prénom : ");
         String prenom = scanner.nextLine();
+        if (prenom.equalsIgnoreCase("q")) return;
+
         System.out.print("Tel : ");
         String tel = scanner.nextLine();
+        if (tel.equalsIgnoreCase("q")) return;
+
         System.out.print("Email : ");
         String email = scanner.nextLine();
+        if (email.equalsIgnoreCase("q")) return;
+
         System.out.print("Club : ");
         String club = scanner.nextLine();
-        System.out.print("Type (MINEUR, NORMAL, ANIMATEUR) : ");
-        ETypeParticipant type = ETypeParticipant.valueOf(scanner.nextLine().toUpperCase());
+        if (club.equalsIgnoreCase("q")) return;
 
         Participant p = new Participant(club, email, tel,prenom, nom);
         data.getParticipants().add(p);
@@ -138,14 +178,26 @@ public class ConsoleUi {
     }
 
     private void creerPlage() {
+        StringBuilder sb = new StringBuilder().append("=== Création plage ===*");
+        System.out.print(Tableau.displayInbox("",sb));
+        System.out.println(Dsg.re + "Q. Quitter\n" + Dsg.r);
+
         System.out.print("Nom de la plage : ");
         String nom = scanner.nextLine();
+        if (nom.equalsIgnoreCase("q")) return;
+
         System.out.print("Jour : ");
         String jour = scanner.nextLine();
+        if (jour.equalsIgnoreCase("q")) return;
+
         System.out.print("Heure début : ");
         String debut = scanner.nextLine();
+        if (debut.equalsIgnoreCase("q")) return;
+
         System.out.print("Heure fin : ");
         String fin = scanner.nextLine();
+        if (fin.equalsIgnoreCase("q")) return;
+
 
         Plage p = new Plage(nom, jour, debut, fin);
         data.getPlages().add(p);
@@ -153,53 +205,98 @@ public class ConsoleUi {
     }
 
     private void inscrireParticipant() {
-        Participant p = choisirParticipant();
-        if (p == null) return;
+        StringBuilder sb = new StringBuilder().append("=== Inscription participant ===*");
+        System.out.print(Tableau.displayInbox("",sb));
+        System.out.println(Dsg.re + "Q. Quitter\n" + Dsg.r);
 
-        Inscription insc = new Inscription(p);
+        boolean running = true;
 
-        System.out.println("Choisissez les plages :");
-        List<Plage> plages = data.getPlages();
-        for (int i = 0; i < plages.size(); i++) {
-            System.out.println((i + 1) + ". " + plages.get(i));
-        }
+        while (running) {
+            Participant p = choisirParticipant();
+            if (p == null) return;
 
-        while (true) {
-            System.out.print("Numéro plage (0 pour terminer): ");
-            int num = scanner.nextInt();
-            scanner.nextLine();
-            if (num == 0) break;
+            Inscription ins = new Inscription(p);
 
-            if (num >= 1 && num <= plages.size()) {
-                try {
-                    insc.addPlage(plages.get(num - 1));
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                }
-            } else {
-                System.out.print(Dsg.re+Dsg.bo+"❌ NUMERO INVALIDE !"+ Dsg.r);
+            System.out.println("Choisisser un tarif :");
+            for(Tarif t : data.getAllTarifs().values()){
+                System.out.printf("%2d. %s\n",t.getId(),t.getNom());
             }
+            System.out.print("\nChoix :");
+            String input =  scanner.nextLine();
+            if (input.equalsIgnoreCase("q")){
+                running  = false;
+                return;
+            }
+            int choix = Integer.parseInt(input);
+
+            ins.setTarif(data.getAllTarifs().get(choix));
+
+            System.out.print("Souper ? (1.oui/2.non) : ");
+            input =  scanner.nextLine();
+            if (input.equalsIgnoreCase("q")){
+                running  = false;
+                return;
+            }
+            boolean bool = input.equalsIgnoreCase("1") ? true : false;
+            ins.setSouper(bool);
+
+            System.out.print("Logement ? (1.oui/2.non) : ");
+            input =  scanner.nextLine();
+            if (input.equalsIgnoreCase("q")){
+                running  = false;
+                return;
+            }
+            bool = input.equalsIgnoreCase("1") ? true : false;
+            ins.setLogement(bool);
+
+            System.out.println("Choisissez les plages :");
+            List<Plage> plages = data.getPlages();
+            for (int i = 0; i < plages.size(); i++) {
+                System.out.println((i + 1) + ". " + plages.get(i));
+            }
+            boolean inRunning = true;
+            while (inRunning) {
+                System.out.print("Numéro plage (0 pour terminer): ");
+                input = scanner.nextLine();
+                if (input.equalsIgnoreCase("q")){
+                    running  = false;
+                    inRunning  = false;
+                    return;
+                }
+                int num  = Integer.parseInt(input);
+
+                if (num == 0) {
+                    inRunning = false;
+                }else{
+                    if (num >= 1 && num <= plages.size()) {
+                        try {
+                            ins.addPlage(plages.get(num - 1));
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } else {
+                        System.out.print(Dsg.re+Dsg.bo+"❌ NUMERO INVALIDE !"+ Dsg.r);
+                    }
+                }
+            }
+
+            data.getInscriptions().add(ins);
+            System.out.println(Dsg.re +"✅ INSCRIPTION AJOUTEE !\n"+ Dsg.r);
         }
-
-        System.out.print("Souper ? (1.oui/2.non) : ");
-        boolean bool = scanner.nextLine().equalsIgnoreCase("1") ? true : false;
-        insc.setSouper(bool);
-        System.out.print("Logement ? (1.oui/2.non) : ");
-        bool = scanner.nextLine().equalsIgnoreCase("1") ? true : false;
-        insc.setLogement(bool);
-
-
-        data.getInscriptions().add(insc);
-        System.out.print(Dsg.re +"✅ INSCRIPTION AJOUTEE !"+ Dsg.r);
     }
 
     private void affecterAnimateur() {
+        StringBuilder sb = new StringBuilder().append("=== Affectation animateur ===*");
+        System.out.print(Tableau.displayInbox("",sb));
+        System.out.println(Dsg.re + "Q. Quitter\n" + Dsg.r);
+
         Plage p = choisirPlage();
         if (p == null) return;
         Participant animateur = choisirParticipant();
         if (animateur == null) return;
             p.setAnimateur(animateur);
         System.out.printf(Dsg.re +"✅ ANIMATEUR %s AFFECTE à %s"+ Dsg.r,animateur.toString() , p.getNom());
+
     }
 
     private void calculerPrix() {
@@ -217,68 +314,88 @@ public class ConsoleUi {
         }
 
         double prix = service.calculerPrix(insc, insc.getTarif(), data.getPlages().size());
-        System.out.printf(Dsg.re +"PRIX TOTAL POUR %s : %.2f"+ Dsg.r, p.toString() , prix);
+        System.out.printf(Dsg.re +"PRIX TOTAL POUR %s : %.2f€"+ Dsg.r, p.toString() , prix);
     }
 
     private Participant choisirParticipant() {
-        List<Participant> participants = data.getParticipants();
-        if (participants.isEmpty()) {
-            System.out.print(Dsg.re +"❌ AUNCUN PARTICIPANT !"+ Dsg.r);
-            return null;
-        }
+        boolean running = true;
+        Participant participant = null;
+        while (running) {
+            if (data.getParticipants().isEmpty()) {
+                System.out.print(Dsg.re +"❌ AUNCUN PARTICIPANT !"+ Dsg.r);
+                return null;
+            }
 
-        System.out.println("Choisissez un participant :");
-        for (int i = 0; i < participants.size(); i++) {
-            System.out.println((i + 1) + ". " + participants.get(i));
-        }
+            System.out.println("Choisissez un participant :");
+            System.out.println(Dsg.re + "Q. Quitter\n" + Dsg.r);
+            for (int i = 0; i < data.getParticipants().size(); i++) {
+                System.out.println((i + 1) + ". " + data.getParticipants().get(i));
+            }
 
-        System.out.print("Numéro : ");
-        int num = scanner.nextInt();
-        scanner.nextLine();
-        if (num < 1 || num > participants.size()) {
-            System.out.print(Dsg.re+Dsg.bo+"❌ NUMERO INVALIDE !"+Dsg.r);
-            return null;
+            System.out.print("\nChoix :");
+            String input = scanner.nextLine();
+
+            if(!input.equalsIgnoreCase("q")) {
+                int num = Integer.parseInt(input);
+                if (num < 1 || num > data.getParticipants().size()) {
+                    System.out.print(Dsg.re+Dsg.bo+"❌ NUMERO INVALIDE !"+Dsg.r);
+    //                return null;
+                }else{
+                    participant = data.getParticipants().get(num - 1);
+                    running = false;
+                }
+            }else {
+                running = false;
+            }
         }
-        return participants.get(num - 1);
+//        return data.getParticipants().get(num - 1);
+        return participant;
     }
 
     private void afficherInscriptions() {
         System.out.println(Dsg.re +"\n=== Participants ==="+ Dsg.r);
-        System.out.println(String.format("%-14s %-15s %-15s %-10s","Nom", "Prénom", "Club", "Type"));
-        System.out.println("──────────────────────────────────────────────────────────");
+        System.out.println(String.format("%-10s %-10s %-10s","Nom", "Prénom", "Club"));
+        System.out.println("─────────────────────────────────────────────");
         for (Participant p : data.getParticipants()) {
             System.out.println(p.toString());
         }
 
         System.out.println(Dsg.re +"\n=== Inscriptions ==="+ Dsg.r);
-        System.out.println(String.format("%-15s %-15s %-15s %-13s %-33s %-45s %-10s","Nom", "Prénom", "Club", "Type", "🍔Souper/🏦Logement","🕛 Plages","🥋Animateur"));
+        System.out.println(String.format("Nom%-7s Prénom%-4s Club%-6s Type%-7s 🍔Souper/🏦Logement%-5s 🥋Animateur%-4s " +
+                "🕛 Plages%-1s","","", "", "", "","",""));
         System.out.println("──────────────────────────────────────────────────────────────────────────────────────" +
-                "───────────────────────────────────────────────────────────────────────");
+                "────────────────────────────────");
         for (Inscription i : data.getInscriptions()) {
             System.out.println(i.toString());
         }
     }
 
     private Plage choisirPlage() {
-        List<Plage> plages = data.getPlages();
-        if (plages.isEmpty()) {
+        Plage plage = null;
+
+        if (data.getPlages().isEmpty()) {
             System.out.println("❌ AUCUNE PLAGE !");
-            return null;
-        }
+            return plage;
+        }else{
+            System.out.println("Choisissez une plage :");
+            for (int i = 0; i < data.getPlages().size(); i++) {
+                System.out.println((i + 1) + ". " + data.getPlages().get(i));
+            }
 
-        System.out.println("Choisissez une plage :");
-        for (int i = 0; i < plages.size(); i++) {
-            System.out.println((i + 1) + ". " + plages.get(i));
-        }
+            System.out.print("\nChoix :");
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("q")){
+                return plage;
+            }
+            int num = Integer.parseInt(input);
 
-        System.out.print("Numéro : ");
-        int num = scanner.nextInt();
-        scanner.nextLine();
-        if (num < 1 || num > plages.size()) {
-            System.out.print(Dsg.re+Dsg.bo+"❌ NUMERO INVALIDE !"+Dsg.r);
-            return null;
+            if (num < 1 || num > data.getPlages().size()) {
+                System.out.print(Dsg.re+Dsg.bo+"❌ NUMERO INVALIDE !"+Dsg.r);
+                return plage;
+            }
+            plage = data.getPlages().get(num - 1);
         }
-        return plages.get(num - 1);
+        return plage;
     }
     public void test(){
         System.out.println("┌──────┬──────┐");

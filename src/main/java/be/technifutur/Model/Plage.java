@@ -46,8 +46,16 @@ public class Plage implements Serializable {
 
     @Override
     public String toString(){
-        return "▫️️Plage : " + nom + " (jour:" + jour + " "+heureDebut+"h-->"+ heureFin +"h) 🥋" +
-                (animateur != null ? animateur.getNom() + " " + animateur.getPrenom() : "Non défini");
+        return String.format(
+                "%-16s %-10s %-2s %-1s",
+                (animateur != null ? animateur.getNom() + " " + animateur.getPrenom() : "Non défini"),
+                nom ,
+                "(" + jour,
+                heureDebut+"h-->"+ heureFin +"h)"
+        );
+
+//        return "🥋"+(animateur != null ? animateur.getNom() + " " + animateur.getPrenom() : "Non défini") +
+//                "    🕛"+nom + "   (" + jour + " "+heureDebut+"h-->"+ heureFin +"h)";
     }
 
 

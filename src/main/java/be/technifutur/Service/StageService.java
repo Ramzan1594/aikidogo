@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 //LOGIQUE METIER
-// classe metier , c'est ici qu'on va faire les calcules pour ne pas les faires
+//classe metier , c'est ici qu'on va faire les calcules pour ne pas les faires
 //dans les classe model
 public class StageService implements Serializable {
     private Scanner scan = new Scanner(System.in);
@@ -44,7 +44,7 @@ public class StageService implements Serializable {
             sb.append("==== MODIFICATION ====*").append("0. Quitter*").append("1. Participant*")
                 .append("2. Plages*").append("3. Tafifs*").append("4. Inscriptions*");
 
-            System.out.print(Tabeau.displayInbox("",sb));
+            System.out.print(Tableau.displayInbox("",sb));
             sb.setLength(0);
 
             System.out.print("Choix :");
@@ -54,7 +54,7 @@ public class StageService implements Serializable {
                 case "0" -> running = false;
                 case "1" -> editParticipant(data.getParticipants());
                 case "2" -> editPlages(data.getPlages(),data.getParticipants());
-                case "3" -> editTarifs(data.getTarifs());
+                case "3" -> editTarifs(data.getAllTarifs());
                 case "4" -> editInscription(data.getInscriptions(), data.getPlages());
             }
         }
@@ -90,7 +90,7 @@ public class StageService implements Serializable {
                         .append("0. Quitter.*").append("1. Ajouter plages.*").append("2. Supprimer plages.*")
                         .append("3. Souper.*").append("4. Logement*");
 
-                        System.out.print(Tabeau.displayInbox("",sb));
+                        System.out.print(Tableau.displayInbox("",sb));
                         sb.setLength(0);
 
                         System.out.print("Choix :");
@@ -176,7 +176,7 @@ public class StageService implements Serializable {
                         sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Nom.*").append("2. Jour.*")
                                 .append("3. Heure de début*").append("4. Heure de fin.*").append("4. Animateur.*");
 
-                        System.out.print(Tabeau.displayInbox("",sb));
+                        System.out.print(Tableau.displayInbox("",sb));
                         sb.setLength(0);
 
                         System.out.print("Choix :");
@@ -249,7 +249,7 @@ public class StageService implements Serializable {
                         sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Nom.*")
                         .append("2. Prenom.*").append("3. Club*").append("4. Type.*");
 
-                        System.out.println(Tabeau.displayInbox("",sb));
+                        System.out.println(Tableau.displayInbox("",sb));
                         sb.setLength(0);
 
                         System.out.print("Choix :");
@@ -309,7 +309,7 @@ public class StageService implements Serializable {
                 sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Prix plage.*")
                 .append("2. Prix souper.*").append("3. Prix logement.*").append("4. Prix full.*");
 
-                System.out.print(Tabeau.displayInbox("",sb));
+                System.out.print(Tableau.displayInbox("",sb));
                 sb.setLength(0);
 
                 System.out.print("Choix :");

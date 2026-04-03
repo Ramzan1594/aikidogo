@@ -1,0 +1,84 @@
+{
+  "participants": [
+    {
+      "id": "9f2ec90f-df0f-4b2c-9998-afad2851de90",
+      "nom": "RAM",
+      "prenom": "ZAN",
+      "tel": "01651651",
+      "mail": "RAM@MAIL.COM",
+      "clubName": "FIGHTCLUB"
+    },
+    {
+      "id": "af615433-7858-4c31-83f9-f03fd981e1b9",
+      "nom": "ASL",
+      "prenom": "LAN",
+      "tel": "0651168",
+      "mail": "ASLALN@GMAIL.COM",
+      "clubName": "SPARTA"
+    }
+  ],
+  "inscriptions": [
+    {
+      "participant": {
+        "id": "af615433-7858-4c31-83f9-f03fd981e1b9",
+        "nom": "ASL",
+        "prenom": "LAN",
+        "tel": "0651168",
+        "mail": "ASLALN@GMAIL.COM",
+        "clubName": "SPARTA"
+      },
+      "plages": [
+        {
+          "nom": "PLAGE1",
+          "jour": "SAMEDI",
+          "heureDebut": "11",
+          "heureFin": "12",
+          "animateur": {
+            "id": "9f2ec90f-df0f-4b2c-9998-afad2851de90",
+            "nom": "RAM",
+            "prenom": "ZAN",
+            "tel": "01651651",
+            "mail": "RAM@MAIL.COM",
+            "clubName": "FIGHTCLUB"
+          }
+        }
+      ],
+      "tarif": {
+        "id": 1,
+        "nom": "NORM",
+        "pPlage": 1.0,
+        "pSouper": 1.0,
+        "pLogement": 1.0,
+        "pFullPlages": 1.0
+      },
+      "souper": true,
+      "logement": true
+    }
+  ],
+  "plages": [
+    {
+      "nom": "PLAGE1",
+      "jour": "SAMEDI",
+      "heureDebut": "11",
+      "heureFin": "12",
+      "animateur": {
+        "id": "9f2ec90f-df0f-4b2c-9998-afad2851de90",
+        "nom": "RAM",
+        "prenom": "ZAN",
+        "tel": "01651651",
+        "mail": "RAM@MAIL.COM",
+        "clubName": "FIGHTCLUB"
+      }
+    }
+  ],
+  "allTarifs": {
+    "1": {
+      "id": 1,
+      "nom": "NORM",
+      "pPlage": 1.0,
+      "pSouper": 1.0,
+      "pLogement": 1.0,
+      "pFullPlages": 1.0
+    }
+  }
+}

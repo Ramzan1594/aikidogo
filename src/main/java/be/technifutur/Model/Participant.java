@@ -11,7 +11,6 @@ public class Participant implements Serializable {
     private String tel;
     private String mail;
     private String clubName;
-//    private ETypeParticipant type;
 
     public String getId() {return id;}
     public String getNom() {return nom;}
@@ -19,7 +18,6 @@ public class Participant implements Serializable {
     public String getTel() {return tel;}
     public String getMail() {return mail;}
     public String getClubName() {return clubName;}
-//    public ETypeParticipant getType() {return type;}
 
 
     public void setNom(String nom) {this.nom = nom;}
@@ -27,10 +25,9 @@ public class Participant implements Serializable {
     public void setTel(String tel) {this.tel = tel;}
     public void setMail(String mail) {this.mail = mail;}
     public void setClubName(String clubName) {this.clubName = clubName;}
-//    public void setType(ETypeParticipant type) {this.type = type;}
 
+    public Participant(){}
     public Participant(String clubName, String mail, String tel, String prenom, String nom) {
-//        this.type = type;
         this.clubName = clubName;
         this.mail = mail;
         this.tel = tel;
@@ -42,7 +39,7 @@ public class Participant implements Serializable {
     public String toString() {
 //        return nom + " " + prenom + " (club:" +  clubName +" status:" + type.toString() + ")";
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-14s %-15s %-15s",nom, prenom, clubName));
+        sb.append(String.format("%-10s %-10s %-10s",nom, prenom, clubName));
         return sb.toString();
     }
 

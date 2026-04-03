@@ -1,0 +1,158 @@
+{
+  "participants": [
+    {
+      "id": "66fb9210-c713-4ed9-b2e0-1ccca772c15b",
+      "nom": "RAMZAN",
+      "prenom": "ARBIEV",
+      "tel": "06558461",
+      "mail": "RAMZ@GMAIL.COM",
+      "clubName": "FIGHT"
+    },
+    {
+      "id": "9c2a0855-b044-4d5b-b6cf-07261390bac8",
+      "nom": "ASLAN",
+      "prenom": "ASLAN",
+      "tel": "0651651",
+      "mail": "ASLAN@GMAIL.COM",
+      "clubName": "SPARTA"
+    },
+    {
+      "id": "5ae389ba-520b-41cb-8c74-d42557b28419",
+      "nom": "ARBIEV",
+      "prenom": "REZVAN",
+      "tel": "06546854",
+      "mail": "REZ@GMAIL.COM",
+      "clubName": "GOGO"
+    }
+  ],
+  "inscriptions": [
+    {
+      "participant": {
+        "id": "9c2a0855-b044-4d5b-b6cf-07261390bac8",
+        "nom": "ASLAN",
+        "prenom": "ASLAN",
+        "tel": "0651651",
+        "mail": "ASLAN@GMAIL.COM",
+        "clubName": "SPARTA"
+      },
+      "plages": [
+        {
+          "nom": "SAMEDI",
+          "jour": "SAMEDI",
+          "heureDebut": "11",
+          "heureFin": "12",
+          "animateur": {
+            "id": "66fb9210-c713-4ed9-b2e0-1ccca772c15b",
+            "nom": "RAMZAN",
+            "prenom": "ARBIEV",
+            "tel": "06558461",
+            "mail": "RAMZ@GMAIL.COM",
+            "clubName": "FIGHT"
+          }
+        }
+      ],
+      "tarif": {
+        "id": 1,
+        "nom": "NORMAL",
+        "pPlage": 30.0,
+        "pSouper": 50.0,
+        "pLogement": 20.0,
+        "pFullPlages": 130.0
+      },
+      "souper": true,
+      "logement": true
+    },
+    {
+      "participant": {
+        "id": "5ae389ba-520b-41cb-8c74-d42557b28419",
+        "nom": "ARBIEV",
+        "prenom": "REZVAN",
+        "tel": "06546854",
+        "mail": "REZ@GMAIL.COM",
+        "clubName": "GOGO"
+      },
+      "plages": [
+        {
+          "nom": "PLAGEDIMA",
+          "jour": "DIMANCHE",
+          "heureDebut": "11",
+          "heureFin": "12",
+          "animateur": {
+            "id": "66fb9210-c713-4ed9-b2e0-1ccca772c15b",
+            "nom": "RAMZAN",
+            "prenom": "ARBIEV",
+            "tel": "06558461",
+            "mail": "RAMZ@GMAIL.COM",
+            "clubName": "FIGHT"
+          }
+        }
+      ],
+      "tarif": {
+        "id": 2,
+        "nom": "VIP",
+        "pPlage": 20.0,
+        "pSouper": 40.0,
+        "pLogement": 10.0,
+        "pFullPlages": 80.0
+      },
+      "souper": true,
+      "logement": true
+    }
+  ],
+  "plages": [
+    {
+      "nom": "SAMEDI",
+      "jour": "SAMEDI",
+      "heureDebut": "11",
+      "heureFin": "12",
+      "animateur": {
+        "id": "66fb9210-c713-4ed9-b2e0-1ccca772c15b",
+        "nom": "RAMZAN",
+        "prenom": "ARBIEV",
+        "tel": "06558461",
+        "mail": "RAMZ@GMAIL.COM",
+        "clubName": "FIGHT"
+      }
+    },
+    {
+      "nom": "PLAGEDIMA",
+      "jour": "DIMANCHE",
+      "heureDebut": "11",
+      "heureFin": "12",
+      "animateur": {
+        "id": "66fb9210-c713-4ed9-b2e0-1ccca772c15b",
+        "nom": "RAMZAN",
+        "prenom": "ARBIEV",
+        "tel": "06558461",
+        "mail": "RAMZ@GMAIL.COM",
+        "clubName": "FIGHT"
+      }
+    }
+  ],
+  "allTarifs": {
+    "1": {
+      "id": 1,
+      "nom": "NORMAL",
+      "pPlage": 30.0,
+      "pSouper": 50.0,
+      "pLogement": 20.0,
+      "pFullPlages": 130.0
+    },
+    "2": {
+      "id": 2,
+      "nom": "VIP",
+      "pPlage": 20.0,
+      "pSouper": 40.0,
+      "pLogement": 10.0,
+      "pFullPlages": 80.0
+    },
+    "3": {
+      "id": 3,
+      "nom": "FORMATEUR",
+      "pPlage": 0.0,
+      "pSouper": 10.0,
+      "pLogement": 10.0,
+      "pFullPlages": 0.0
+    }
+  }
+}

@@ -1,8 +1,5 @@
 package be.technifutur;
 
-import be.technifutur.Model.StageData;
-import be.technifutur.Model.Tabeau;
-import be.technifutur.Storage.DataStorage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -10,9 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalTime;
 import java.util.Calendar;
-import java.util.Scanner;
 
 public class AppInfo {
     public static StringBuilder staticVersion ;
