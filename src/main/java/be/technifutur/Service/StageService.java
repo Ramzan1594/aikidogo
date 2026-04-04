@@ -13,7 +13,7 @@ import java.util.Scanner;
 //dans les classe model
 public class StageService implements Serializable {
     private Scanner scan = new Scanner(System.in);
-
+    StringBuilder sb = new StringBuilder();
 
     public double calculerPrix(Inscription ins, Tarif t, int totalPlages) {
         int nbPlage = ins.getPlages().size();
@@ -37,29 +37,83 @@ public class StageService implements Serializable {
         return total;
     }
 
-    public void menuEdit(StageData data) {
+    public void menuEdit(StageData data,boolean delete) {
         boolean running = true;
         while(running){
-            StringBuilder sb = new StringBuilder();
-            sb.append("==== MODIFICATION ====*").append("0. Quitter*").append("1. Participant*")
+
+            sb.append(delete?"==== SUPPRESSION ====*":"==== MODIFICATION ====*").append("Q. Quitter*").append("1. Participant*")
                 .append("2. Plages*").append("3. Tafifs*").append("4. Inscriptions*");
 
             System.out.print(Tableau.displayInbox("",sb));
             sb.setLength(0);
 
-            System.out.print("Choix :");
-            String choix =  scan.nextLine();
+            System.out.print("\nChoix :");
+            String choix =  scan.nextLine().toLowerCase();
 
-            switch(choix){
-                case "0" -> running = false;
-                case "1" -> editParticipant(data.getParticipants());
-                case "2" -> editPlages(data.getPlages(),data.getParticipants());
-                case "3" -> editTarifs(data.getAllTarifs());
-                case "4" -> editInscription(data.getInscriptions(), data.getPlages());
+            //si on veut le menu edit
+            if(!delete) {
+                switch(choix){
+                    case "q" -> running = false;
+                    case "1" -> editParticipant(data.getParticipants());
+                    case "2" -> editPlages(data.getPlages(),data.getParticipants());
+                    case "3" -> editTarifs(data.getAllTarifs());
+                    case "4" -> editInscription(data.getInscriptions(), data.getPlages());
+                }
+            }else{//pour le menu delete
+                switch(choix){
+                    case "q" -> running = false;
+                    case "1" -> deleteParticipant(data.getParticipants());
+                    case "2" -> editPlages(data.getPlages(),data.getParticipants());
+                    case "3" -> editTarifs(data.getAllTarifs());
+                    case "4" -> editInscription(data.getInscriptions(), data.getPlages());
+                }
             }
         }
-
     }
+
+    private void deleteParticipant(List<Participant> listP) {
+        if(!listP.isEmpty()){
+            boolean running = true;
+            while(running){
+                System.out.println("Selectionner le participant a supprimer");
+                for(int i=0;i<listP.size();i++){
+                    System.out.printf("%-4d %s\n",i+1,listP.get(i).toString());
+                }
+                try{
+                    System.out.print("\nChoix :");
+                    String choix =  scan.nextLine();
+
+                    if(choix.equalsIgnoreCase("q"))
+                        running = false;
+                    else{
+                        if(!choix.matches("\\d+"))
+                            throw new Exception(Dsg.re+"❌ LE CHOIX DOIT ETRE UN NUMERO!"+ Dsg.r);
+                        int posListPar = Integer.parseInt(choix)-1;
+
+                        if(posListPar < 0 || posListPar+1 > listP.size())
+                            throw new Exception(Dsg.re+"❌ CHOIX INVALIDE!"+ Dsg.r);
+
+                        boolean inRunning = true;
+                        while(inRunning && running){
+                            System.out.println("Supprimer ce participant ? 1.oui 2.non");
+                            System.out.println(listP.get(posListPar).toString());
+                            System.out.print("\nChoix :");
+                            String rep =  scan.nextLine();
+                            if(rep.equalsIgnoreCase("1"))
+                            {
+                                System.out.printf(Dsg.re+"%s SUPPRIMER\n"+Dsg.r,listP.get(posListPar));
+                                listP.remove(posListPar);
+                            }
+                            inRunning = false;
+                        }
+                    }
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+
 
     //ici on doit pouvoir modifier  plages, souper logement
     private void editInscription(List<Inscription> ins, List<Plage> listPl) {
@@ -85,21 +139,20 @@ public class StageService implements Serializable {
                     boolean inRunning = true;
                     while(inRunning && running){
                         System.out.printf("Etat actuel de l'inscription\n%s\n",ins.get(posIns).toString());
-                        StringBuilder sb = new StringBuilder();
+
                         sb.append("Que desirez vous modifier ?*")
-                        .append("0. Quitter.*").append("1. Ajouter plages.*").append("2. Supprimer plages.*")
+                        .append("Q. Quitter.*").append("1. Ajouter plages.*").append("2. Supprimer plages.*")
                         .append("3. Souper.*").append("4. Logement*");
 
                         System.out.print(Tableau.displayInbox("",sb));
                         sb.setLength(0);
 
-                        System.out.print("Choix :");
-                        String inChoix =  scan.nextLine();
-                        int choixMod = Integer.parseInt(inChoix);
+                        System.out.print("\nChoix :");
+                        String inChoix =  scan.nextLine().toLowerCase();
 
-                        switch (choixMod){
-                            case 0 -> inRunning = false;
-                            case 1 -> {
+                        switch (inChoix){
+                            case "q" -> inRunning = false;
+                            case "1" -> {
                                 listPl = listPl.stream()
                                         .filter(p->!ins.get(posIns).getPlages().contains(p))
                                         .toList();
@@ -112,26 +165,26 @@ public class StageService implements Serializable {
                                 for (int i = 0; i < listPl.size(); i++) {
                                     System.out.printf("%-4d %s\n",i+1,listPl.get(i).toString());
                                 }
-                                System.out.print("Choix :");
+                                System.out.print("\nChoix :");
                                 int posPl = scan.nextInt();
                                 ins.get(posIns).addPlage(listPl.get(posIns));
                             }
-                            case 2 -> {
+                            case "2" -> {
                                 System.out.println("Selectionner la plage a supprimer : ");
                                 for (int i = 0; i < ins.get(posIns).getPlages().size(); i++) {
                                     System.out.printf("%-4d %s\n",i+1,ins.get(posIns).getPlages().get(i).toString());
                                 }
-                                System.out.print("Choix :");
+                                System.out.print("\nChoix :");
                                 int posPl = scan.nextInt()-1;
                                 ins.get(posIns).removePlage(ins.get(posIns).getPlages().get(posPl));
                             }
-                            case 3 -> {
+                            case "3" -> {
                                 System.out.println("Changer le souper : 1.oui - 2.non");
-                                System.out.print("Choix :");
+                                System.out.print("\nChoix :");
                                 boolean bool = scan.nextInt() == 1 ? true : false;
                                 ins.get(posIns).setSouper(bool);
                             }
-                            case 4 -> {
+                            case "4" -> {
                                 System.out.println("Changer le logement : 1.oui - 2.non");
                                 System.out.print("Choix :");
                                 boolean bool = scan.nextInt() == 1 ? true : false;
@@ -157,60 +210,75 @@ public class StageService implements Serializable {
                     System.out.printf("%-4d %s\n",i+1,listPl.get(i).toString());
                 }
                 try{
-                    System.out.print("Choix :");
-                    String choix =  scan.nextLine();
+                    System.out.print("\nChoix :");
+                    String choix =  scan.nextLine().toLowerCase();
 
-                    if(!choix.matches("\\d+"))
-                        throw new Exception(Dsg.re+"❌ LE CHOIX DOIT ETRE UN NUMERO!"+ Dsg.r);
-                    int posListPl = Integer.parseInt(choix)-1;
-
-                    if(posListPl+1 > listPl.size())
-                        throw new Exception(Dsg.re+"❌ CHOIX INVALIDE!"+ Dsg.r);
-                    else if(choix.equals("0"))
+                    if(choix.equals("q"))
                         running = false;
+                    else{
+                        if(!choix.matches("\\d+"))
+                            throw new Exception(Dsg.re+"❌ LE CHOIX DOIT ETRE UN NUMERO!"+ Dsg.r);
+                        int posListPl = Integer.parseInt(choix)-1;
 
-                    boolean inRunning = true;
-                    while(inRunning && running){
-                        System.out.printf("Etat actuel de la plage\n%s\n",listPl.get(posListPl).toString());
-                        StringBuilder sb = new StringBuilder();
-                        sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Nom.*").append("2. Jour.*")
-                                .append("3. Heure de début*").append("4. Heure de fin.*").append("4. Animateur.*");
+                        if(posListPl+1 > listPl.size())
+                            throw new Exception(Dsg.re+"❌ CHOIX INVALIDE!"+ Dsg.r);
 
-                        System.out.print(Tableau.displayInbox("",sb));
-                        sb.setLength(0);
 
-                        System.out.print("Choix :");
-                        int inChoix =  scan.nextInt();
-                        Scanner newInput = new Scanner(System.in);
+                        boolean inRunning = true;
+                        while(inRunning && running){
+                            System.out.printf("Plage selectionnée\n%s\n",listPl.get(posListPl).toString());
 
-                        switch (inChoix){
-                            case 0 -> inRunning = false;
-                            case 1 -> {
-                                System.out.print("Nouveau nom : ");
-                                listPl.get(posListPl).setNom(newInput.nextLine());
-                            }
-                            case 2 -> {
-                                System.out.print("Nouveau Jour : ");
-                                listPl.get(posListPl).setJour(newInput.nextLine());
-                            }
-                            case 3 -> {
-                                System.out.print("Nouveau heure de début : ");
-                                listPl.get(posListPl).setHeureDebut(newInput.nextLine());
-                            }
-                            case 4 -> {
-                                System.out.print("Nouveau heure de fin : ");
-                                listPl.get(posListPl).setHeureFin(newInput.nextLine());
-                            }
-                            case 5 -> {
-                                System.out.print("Nouveau animateur : ");
-                                for (int i = 0; i < listP.size(); i++) {
-                                    System.out.printf("%-4d %s\n",i+1,listP.get(i).toString());
+                            sb.append("Que desirez vous modifier ?*").append("Q. Quitter.*").append("1. Nom.*").append("2. Jour.*")
+                                    .append("3. Heure de début*").append("4. Heure de fin.*").append("4. Animateur.*");
+
+                            System.out.print(Tableau.displayInbox("",sb));
+                            sb.setLength(0);
+
+                            System.out.print("\nChoix :");
+    //                        int inChoix =  scan.nextInt();
+    //                        Scanner newInput = new Scanner(System.in);
+                            String inChoix = scan.nextLine().toLowerCase();
+
+
+                            switch (inChoix){
+                                case "q" -> inRunning = false;
+                                case "1" -> {
+                                    System.out.print("Nouveau nom : ");
+                                    String nom = scan.nextLine();
+                                    if(!nom.equalsIgnoreCase("q"))
+                                        listPl.get(posListPl).setNom(nom);
                                 }
-                                System.out.println("Choix :");
-                                int posParti = scan.nextInt();
-                                listPl.get(posListPl).setAnimateur(listP.get(posParti));
+                                case "2" -> {
+                                    System.out.print("Nouveau Jour : ");
+                                    String jour = scan.nextLine();
+                                    if(!jour.equalsIgnoreCase("q"))
+                                        listPl.get(posListPl).setJour(jour);
+                                }
+                                case "3" -> {
+                                    System.out.print("Nouveau heure de début : ");
+                                    String hd = scan.nextLine();
+                                    if(!hd.equalsIgnoreCase("q"))
+                                        listPl.get(posListPl).setHeureDebut(hd);
+                                }
+                                case "4" -> {
+                                    System.out.print("Nouveau heure de fin : ");
+                                    String hf = scan.nextLine();
+                                    if(!hf.equalsIgnoreCase("q"))
+                                        listPl.get(posListPl).setHeureFin(hf);
+                                }
+                                case "5" -> {
+                                    System.out.print("Nouveau animateur : ");
+                                    for (int i = 0; i < listP.size(); i++) {
+                                        System.out.printf("%-4d %s\n",i+1,listP.get(i).toString());
+                                    }
+                                    System.out.println("\nChoix :");
+                                    String posParti = scan.nextLine();
+                                    if(!posParti.equalsIgnoreCase("q"))
+                                        listPl.get(posListPl).setAnimateur(
+                                        listP.get(Integer.parseInt(posParti)));
+                                }
+                                default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
                             }
-                            default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
                         }
                     }
                 }catch(Exception e){
@@ -230,54 +298,57 @@ public class StageService implements Serializable {
                     System.out.printf("%-4d %s\n",i+1,listP.get(i).toString());
                 }
                 try{
-                    System.out.print("Choix :");
+                    System.out.print("\nChoix :");
                     String choix =  scan.nextLine();
 
-                    if(!choix.matches("\\d+"))
-                        throw new Exception(Dsg.re+"❌ LE CHOIX DOIT ETRE UN NUMERO!"+ Dsg.r);
-                    int posListPar = Integer.parseInt(choix)-1;
-
-                    if(posListPar+1 > listP.size())
-                        throw new Exception(Dsg.re+"❌ CHOIX INVALIDE!"+ Dsg.r);
-                    else if(choix.equals("0"))
+                    if(choix.equalsIgnoreCase("q"))
                         running = false;
+                    else{
+                        if(!choix.matches("\\d+"))
+                            throw new Exception(Dsg.re+"❌ LE CHOIX DOIT ETRE UN NUMERO!"+ Dsg.r);
+                        int posListPar = Integer.parseInt(choix)-1;
 
-                    boolean inRunning = true;
-                    while(inRunning && running){
-                        System.out.printf("Etat actuel du participan\n%s\n",listP.get(posListPar).toString());
-                        StringBuilder sb = new StringBuilder();
-                        sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Nom.*")
-                        .append("2. Prenom.*").append("3. Club*").append("4. Type.*");
+                        if(posListPar+1 > listP.size())
+                            throw new Exception(Dsg.re+"❌ CHOIX INVALIDE!"+ Dsg.r);
 
-                        System.out.println(Tableau.displayInbox("",sb));
-                        sb.setLength(0);
+                        boolean inRunning = true;
+                        while(inRunning && running){
+                            System.out.printf("Participan selectionnée\n%s\n",listP.get(posListPar).toString());
 
-                        System.out.print("Choix :");
-                        int inChoix =  scan.nextInt();
-                        Scanner newInput = new Scanner(System.in);
+                            sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Nom.*")
+                            .append("2. Prenom.*").append("3. Club*").append("4. Type.*");
 
-                        switch (inChoix){
-                            case 0 -> inRunning = false;
-                            case 1 -> {
-                                System.out.print("Nouveau nom : ");
-                                listP.get(posListPar).setNom(newInput.nextLine());
+                            System.out.println(Tableau.displayInbox("",sb));
+                            sb.setLength(0);
+
+                            System.out.print("\nChoix :");
+                            int inChoix =  scan.nextInt();
+                            Scanner newInput = new Scanner(System.in);
+
+                            switch (inChoix){
+                                case 0 -> inRunning = false;
+                                case 1 -> {
+                                    System.out.print("Nouveau nom : ");
+                                    listP.get(posListPar).setNom(newInput.nextLine());
+                                }
+                                case 2 -> {
+                                    System.out.print("Nouveau prenom : ");
+                                    listP.get(posListPar).setPrenom(newInput.nextLine());
+                                }
+                                case 3 -> {
+                                    System.out.print("Nouveau club : ");
+                                    listP.get(posListPar).setClubName(newInput.nextLine());
+                                }
+                                case 4 -> {
+                                    System.out.print("Nouveau type : ");
+    //                                listP.get(posListPar).setType(ETypeParticipant.
+    //                                        valueOf(newInput.nextLine().toUpperCase()));
+                                }
+                                default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
                             }
-                            case 2 -> {
-                                System.out.print("Nouveau prenom : ");
-                                listP.get(posListPar).setPrenom(newInput.nextLine());
-                            }
-                            case 3 -> {
-                                System.out.print("Nouveau club : ");
-                                listP.get(posListPar).setClubName(newInput.nextLine());
-                            }
-                            case 4 -> {
-                                System.out.print("Nouveau type : ");
-//                                listP.get(posListPar).setType(ETypeParticipant.
-//                                        valueOf(newInput.nextLine().toUpperCase()));
-                            }
-                            default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
                         }
                     }
+
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
@@ -291,52 +362,72 @@ public class StageService implements Serializable {
     private void editTarifs(HashMap<Integer,Tarif> dbTarifs) {
         if(dbTarifs != null)
         {
-            System.out.println("Selectionner un tarif");
-            for(Tarif tarif : dbTarifs.values()){
-                System.out.println(tarif.getId()+"."+tarif.toString());
-            }
-
-            System.out.println("Choix :");
-            String choix = scan.nextLine();
-            int ch = Integer.parseInt(choix);
-
-            Tarif tarif = dbTarifs.get(ch);
             boolean running = true;
-
-            while(running){
-                System.out.printf("Voici les tarifs actuels\n%s",tarif.toString());
-                StringBuilder sb = new StringBuilder();
-                sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Prix plage.*")
-                .append("2. Prix souper.*").append("3. Prix logement.*").append("4. Prix full.*");
-
-                System.out.print(Tableau.displayInbox("",sb));
-                sb.setLength(0);
+            while(running)
+            {
+                System.out.println("Selectionner un tarif");
+                for(Tarif tarif : dbTarifs.values()){
+                    System.out.println(tarif.toString());
+                }
 
                 System.out.print("Choix :");
-                choix = scan.nextLine();
+                String choix = scan.nextLine().toLowerCase();
 
-                if(choix.equals("0"))
+                if(choix.equalsIgnoreCase("q"))
                     running = false;
 
-                switch (choix){
-                    case "0" -> running = false;
-                    case "1"->{
-                        System.out.print("Nouveau prix plage : ");
-                        tarif.setpPlage(scan.nextDouble());
+                boolean inRunning = true;
+                while(inRunning && running){
+                    Tarif selectedT = dbTarifs.get(Integer.parseInt(choix));
+                    System.out.printf("Tarif selectionné\n%s",selectedT.toString());
+                    sb.append("Que desirez vous modifier ?*").append("Q. Quitter.*").append("1. Prix plage.*")
+                    .append("2. Prix souper.*").append("3. Prix logement.*").append("4. Prix full.*");
+                    System.out.print(Tableau.displayInbox("",sb));
+                    sb.setLength(0);
+
+                    System.out.print("\nChoix :");
+                    choix = scan.nextLine().toLowerCase();
+
+                    if(choix.equalsIgnoreCase("q"))
+                        inRunning = false;
+                    else{
+                        switch (choix){
+                            case "1"->{
+                                System.out.print("Nouveau prix plage : ");
+                                String input = scan.nextLine();
+                                if(input.equalsIgnoreCase("q"))
+                                    inRunning = false;
+                                else
+                                    selectedT.setpPlage(Double.parseDouble(input));
+                            }
+                            case "2"->{
+                                System.out.print("Nouveau prix souper : ");
+                                String input = scan.nextLine();
+                                if(input.equalsIgnoreCase("q"))
+                                    inRunning = false;
+                                else
+                                    selectedT.setpSouper(Double.parseDouble(input));
+                            }
+                            case "3"->{
+                                System.out.print("Nouveau prix logement: ");
+                                String input = scan.nextLine();
+                                if(input.equalsIgnoreCase("q"))
+                                    inRunning = false;
+                                else
+                                    selectedT.setpLogement(Double.parseDouble(input));
+                            }
+                            case "4"->{
+                                System.out.print("Nouveau prix full: ");
+                                String input = scan.nextLine();
+                                if(input.equalsIgnoreCase("q"))
+                                    inRunning = false;
+                                else
+                                    selectedT.setpFullPlages(Double.parseDouble(input));
+                            }
+                            default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
+                        }
                     }
-                    case "2"->{
-                        System.out.print("Nouveau prix souper : ");
-                        tarif.setpSouper(scan.nextDouble());
-                    }
-                    case "3"->{
-                        System.out.print("Nouveau prix logement: ");
-                        tarif.setpLogement(scan.nextDouble());
-                    }
-                    case "4"->{
-                        System.out.print("Nouveau prix full: ");
-                        tarif.setpFullPlages(scan.nextDouble());
-                    }
-                    default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
+
                 }
             }
         }else
@@ -344,6 +435,5 @@ public class StageService implements Serializable {
             System.out.println(Dsg.re+"❌ AUCUN TARIF DEFINIE!"+ Dsg.r);
         }
     }
-
 
 }

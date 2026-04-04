@@ -47,6 +47,7 @@ public class ConsoleUi {
             System.out.println("│"+ Dsg.wh +"r. Afficher tarifs"+ Dsg.pu+"                      │");
             System.out.println("├────────────────────────────────────────┤");
             System.out.println(Dsg.pu+"│"+ Dsg.wh +"f. Menu modification"+ Dsg.pu +"                    │");
+            System.out.println(Dsg.pu+"│"+ Dsg.wh +"d. Menu supression"+ Dsg.pu +"                      │");
             System.out.println(Dsg.pu +"└────────────────────────────────────────┘"+ Dsg.r);
 
             System.out.print("\nChoix : ");
@@ -68,14 +69,15 @@ public class ConsoleUi {
                 case "e" -> afficherInscriptions();
                 case "r" -> afficherTarif();
 
-                case "f" -> service.menuEdit(data);
+                case "f" -> service.menuEdit(data,false);
+                case "d" -> service.menuEdit(data,true);
                 default -> System.out.println(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
             }
         }
     }
 
     private void afficherPlages() {
-        System.out.println(String.format("%-12s %-10s %-15s","🥋Animateur", "🕛Plages","Horaire"));
+        System.out.println(String.format("🥋Animateur%-5s Plages%-4s 🕛Horaire%-3s","", "",""));
         System.out.println("─────────────────────────────────────────");
         for (int i = 0; i < data.getPlages().size(); i++) {
             System.out.println(data.getPlages().get(i).toString());

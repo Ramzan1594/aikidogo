@@ -47,7 +47,7 @@ public class Tarif implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("======= TARIFS %s =======*",nom)).append(String.format("Plages : %.2f€*", this.pPlage))
+        sb.append(String.format("======= %d.TARIFS %s =======*",id,nom)).append(String.format("Plages : %.2f€*", this.pPlage))
         .append(String.format("Souper : %.2f€*", this.pSouper)).append(String.format("Logement : %.2f€*", this.pLogement))
         .append(String.format("Full : %.2f€*", this.pFullPlages));
 

@@ -3,6 +3,7 @@ package be.technifutur.Model;
 import be.technifutur.Dsg;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Tableau {
 
@@ -34,7 +35,8 @@ public class Tableau {
             int p= part.length();
             int insideLen = tabLen-p;
             int offset= (insideLen%2)==1?1:0;
-            String redColor = part.contains("0. Quitter")? Dsg.re:"";
+            List<String> check = List.of("Q. Quitter","SUPPRESSION");
+            String redColor = check.stream().anyMatch(part::contains)? Dsg.re:"";
             ret+=String.format("│"+ redColor+" ".repeat(insideLen/2)+"%s"+ " ".repeat(insideLen/2+offset)+resetColor+"│\n",part);
         }
             ret+=startDw+midLine+endD+ Dsg.r;
