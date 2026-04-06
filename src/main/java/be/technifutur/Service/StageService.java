@@ -21,15 +21,15 @@ public class StageService implements Serializable {
         if (t == null) {
             System.out.println("⚠️ Aucun tarif défini !");
             total = 0;
-        }else{
-            if(nbPlage == totalPlages)
+        } else {
+            if (nbPlage == totalPlages)
                 total = t.getpFullPlages();
             else
                 total = nbPlage * t.getpPlage();
 
-            if(ins.getSouper())
+            if (ins.getSouper())
                 total += t.getpSouper();
-            if(ins.getLogement())
+            if (ins.getLogement())
                 total += t.getpLogement();
 
 //            total *= ins.getParticipant().getType().getCoefficient();
@@ -37,77 +37,112 @@ public class StageService implements Serializable {
         return total;
     }
 
-    public void menuEdit(StageData data,boolean delete) {
+    public void menuEdit(StageData data, boolean delete) {
         boolean running = true;
-        while(running){
+        while (running) {
 
-            sb.append(delete?"==== SUPPRESSION ====*":"==== MODIFICATION ====*").append("Q. Quitter*").append("1. Participant*")
-                .append("2. Plages*").append("3. Tafifs*").append("4. Inscriptions*");
+            sb.append(delete ? "==== SUPPRESSION ====*" : "==== MODIFICATION ====*").append("Q. Quitter*").append("1. Participant*")
+                    .append("2. Plages*").append("3. Tafifs*").append("4. Inscriptions*");
 
-            System.out.print(Tableau.displayInbox("",sb));
+            System.out.print(Tableau.displayInbox("", sb));
             sb.setLength(0);
 
             System.out.print("\nChoix :");
-            String choix =  scan.nextLine().toLowerCase();
+            String choix = scan.nextLine().toLowerCase();
 
             //si on veut le menu edit
-            if(!delete) {
-                switch(choix){
+            if (!delete) {
+                switch (choix) {
                     case "q" -> running = false;
                     case "1" -> editParticipant(data.getParticipants());
-                    case "2" -> editPlages(data.getPlages(),data.getParticipants());
+                    case "2" -> editPlages(data.getPlages(), data.getParticipants());
                     case "3" -> editTarifs(data.getAllTarifs());
                     case "4" -> editInscription(data.getInscriptions(), data.getPlages());
+                    default -> System.out.println(Dsg.re + "❌ CHOIX INVALIDE!" + Dsg.r);
                 }
-            }else{//pour le menu delete
-                switch(choix){
+            } else {//pour le menu delete
+                switch (choix) {
                     case "q" -> running = false;
                     case "1" -> deleteParticipant(data.getParticipants());
-                    case "2" -> editPlages(data.getPlages(),data.getParticipants());
-                    case "3" -> editTarifs(data.getAllTarifs());
-                    case "4" -> editInscription(data.getInscriptions(), data.getPlages());
+                    case "2" -> deletePlages(data.getPlages());
+//                    case "3" -> deleteTarif(data.getAllTarifs());
+//                    case "4" -> deleteInscription(data.getInscriptions(), data.getPlages());
+                    default -> System.out.println(Dsg.re + "❌ CHOIX INVALIDE!" + Dsg.r);
+                }
+            }
+        }
+    }
+
+    private void deletePlages(List<Plage> listPl) {
+        boolean running = true;
+        while (running) {
+            System.out.println("Selectionner la plage a supprimer");
+            for (int i = 0; i < listPl.size(); i++) {
+                System.out.printf("%-3d %s\n", i + 1, listPl.get(i));
+            }
+            System.out.print("\nChoix :");
+            String choix = scan.nextLine().toLowerCase();
+
+            if(choix.equalsIgnoreCase("q") || !choix.matches("\\d+")) {
+                running = false;
+            }else{
+                int posPl =  Integer.parseInt(choix)-1;
+
+                if(posPl >= 0 && posPl < listPl.size()) {
+                    System.out.println("Supprimer la plage ? 1.oui 2.non");
+                    System.out.printf("%-3d %s\n", posPl+1, listPl.get(posPl));
+
+                    System.out.print("\nChoix :");
+                    choix = scan.nextLine().toLowerCase();
+
+                    if(choix.equalsIgnoreCase("1")){
+                        System.out.printf(Dsg.re + "%s SUPPRIMER\n\n" + Dsg.r, listPl.get(posPl));
+                        listPl.remove(posPl);
+                    }
+
+                }else{
+                    System.out.println(Dsg.re + "❌ CHOIX INVALIDE!" + Dsg.r);
                 }
             }
         }
     }
 
     private void deleteParticipant(List<Participant> listP) {
-        if(!listP.isEmpty()){
+        if (!listP.isEmpty()) {
             boolean running = true;
-            while(running){
+            while (running) {
                 System.out.println("Selectionner le participant a supprimer");
-                for(int i=0;i<listP.size();i++){
-                    System.out.printf("%-4d %s\n",i+1,listP.get(i).toString());
+                for (int i = 0; i < listP.size(); i++) {
+                    System.out.printf("%-3d %s\n", i + 1, listP.get(i));
                 }
-                try{
+                try {
                     System.out.print("\nChoix :");
-                    String choix =  scan.nextLine();
+                    String choix = scan.nextLine();
 
-                    if(choix.equalsIgnoreCase("q"))
+                    if (choix.equalsIgnoreCase("q"))
                         running = false;
-                    else{
-                        if(!choix.matches("\\d+"))
-                            throw new Exception(Dsg.re+"❌ LE CHOIX DOIT ETRE UN NUMERO!"+ Dsg.r);
-                        int posListPar = Integer.parseInt(choix)-1;
+                    else {
+                        if (!choix.matches("\\d+"))
+                            throw new Exception(Dsg.re + "❌ LE CHOIX DOIT ETRE UN NUMERO!" + Dsg.r);
+                        int posListPar = Integer.parseInt(choix) - 1;
 
-                        if(posListPar < 0 || posListPar+1 > listP.size())
-                            throw new Exception(Dsg.re+"❌ CHOIX INVALIDE!"+ Dsg.r);
+                        if (posListPar < 0 || posListPar + 1 > listP.size())
+                            throw new Exception(Dsg.re + "❌ CHOIX INVALIDE!" + Dsg.r);
 
                         boolean inRunning = true;
-                        while(inRunning && running){
+                        while (inRunning && running) {
                             System.out.println("Supprimer ce participant ? 1.oui 2.non");
-                            System.out.println(listP.get(posListPar).toString());
+                            System.out.println(listP.get(posListPar));
                             System.out.print("\nChoix :");
-                            String rep =  scan.nextLine();
-                            if(rep.equalsIgnoreCase("1"))
-                            {
-                                System.out.printf(Dsg.re+"%s SUPPRIMER\n"+Dsg.r,listP.get(posListPar));
+                            String rep = scan.nextLine();
+                            if (rep.equalsIgnoreCase("1")) {
+                                System.out.printf(Dsg.re + "%s SUPPRIMER\n" + Dsg.r, listP.get(posListPar));
                                 listP.remove(posListPar);
                             }
                             inRunning = false;
                         }
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -117,215 +152,220 @@ public class StageService implements Serializable {
 
     //ici on doit pouvoir modifier  plages, souper logement
     private void editInscription(List<Inscription> ins, List<Plage> listPl) {
-        if(!ins.isEmpty()){
+        if (!ins.isEmpty()) {
             boolean running = true;
-            while(running){
+            while (running) {
+                System.out.println("Selectionner une inscription");
                 for (int i = 0; i < ins.size(); i++) {
-                    System.out.printf("%-4d %s\n",i+1,ins.get(i).toString());
+                    System.out.printf("%-3d %s\n", i + 1, ins.get(i));
                 }
-                try{
+                try {
                     System.out.print("Choix :");
                     String choix = scan.nextLine();
 
-                    if(!choix.matches("\\d+"))
-                        throw new Exception(Dsg.re+"❌ LE CHOIX DOIT ETRE UN NUMERO!"+ Dsg.r);
-                    int posIns = Integer.parseInt(choix)-1;
-
-                    if(posIns+1 > ins.size())
-                        throw new Exception(Dsg.re+"❌ CHOIX INVALIDE!"+ Dsg.r);
-                    else if(choix.equals("0"))
+                    if (choix.equals("q"))
                         running = false;
+                    else {
+                        if (!choix.matches("\\d+"))
+                            throw new Exception(Dsg.re + "❌ LE CHOIX DOIT ETRE UN NUMERO!" + Dsg.r);
+                        int posIns = Integer.parseInt(choix) - 1;
 
-                    boolean inRunning = true;
-                    while(inRunning && running){
-                        System.out.printf("Etat actuel de l'inscription\n%s\n",ins.get(posIns).toString());
+                        if (posIns + 1 > ins.size() || posIns < 1)
+                            throw new Exception(Dsg.re + "❌ CHOIX INVALIDE!" + Dsg.r);
 
-                        sb.append("Que desirez vous modifier ?*")
-                        .append("Q. Quitter.*").append("1. Ajouter plages.*").append("2. Supprimer plages.*")
-                        .append("3. Souper.*").append("4. Logement*");
+                        boolean inRunning = true;
+                        while (inRunning && running) {
+                            System.out.printf("Etat actuel de l'inscription\n%s\n", ins.get(posIns));
 
-                        System.out.print(Tableau.displayInbox("",sb));
-                        sb.setLength(0);
+                            sb.append("Que desirez vous modifier ?*")
+                                    .append("Q. Quitter.*").append("1. Ajouter plages.*").append("2. Supprimer plages.*")
+                                    .append("3. Souper.*").append("4. Logement*");
 
-                        System.out.print("\nChoix :");
-                        String inChoix =  scan.nextLine().toLowerCase();
+                            System.out.print(Tableau.displayInbox("", sb));
+                            sb.setLength(0);
 
-                        switch (inChoix){
-                            case "q" -> inRunning = false;
-                            case "1" -> {
-                                listPl = listPl.stream()
-                                        .filter(p->!ins.get(posIns).getPlages().contains(p))
-                                        .toList();
+                            System.out.print("\nChoix :");
+                            String inChoix = scan.nextLine().toLowerCase();
 
-                                if(listPl.isEmpty())
-                                    throw new Exception(Dsg.re+Dsg.bo+String.format("❌ Aucune autre plage disponible pour %s!",ins.get(posIns).getParticipant().getNom())+ Dsg.r);
+                            switch (inChoix) {
+                                case "q" -> inRunning = false;
+                                case "1" -> {
+                                    listPl = listPl.stream()
+                                            .filter(p -> !ins.get(posIns).getPlages().contains(p))
+                                            .toList();
 
-                                System.out.println("Selectionner la plage a ajouté : ");
+                                    if (listPl.isEmpty())
+                                        throw new Exception(Dsg.re + Dsg.bo + String.format("❌ Aucune autre plage disponible pour %s!", ins.get(posIns).getParticipant().getNom()) + Dsg.r);
 
-                                for (int i = 0; i < listPl.size(); i++) {
-                                    System.out.printf("%-4d %s\n",i+1,listPl.get(i).toString());
+                                    System.out.println("Selectionner la plage a ajouté : ");
+
+                                    for (int i = 0; i < listPl.size(); i++) {
+                                        System.out.printf("%-4d %s\n", i + 1, listPl.get(i));
+                                    }
+                                    System.out.print("\nChoix :");
+                                    int posPl = scan.nextInt();
+                                    ins.get(posIns).addPlage(listPl.get(posIns));
                                 }
-                                System.out.print("\nChoix :");
-                                int posPl = scan.nextInt();
-                                ins.get(posIns).addPlage(listPl.get(posIns));
-                            }
-                            case "2" -> {
-                                System.out.println("Selectionner la plage a supprimer : ");
-                                for (int i = 0; i < ins.get(posIns).getPlages().size(); i++) {
-                                    System.out.printf("%-4d %s\n",i+1,ins.get(posIns).getPlages().get(i).toString());
+                                case "2" -> {
+                                    System.out.println("Selectionner la plage a supprimer : ");
+                                    for (int i = 0; i < ins.get(posIns).getPlages().size(); i++) {
+                                        System.out.printf("%-4d %s\n", i + 1, ins.get(posIns).getPlages().get(i));
+                                    }
+                                    System.out.print("\nChoix :");
+                                    int posPl = scan.nextInt() - 1;
+                                    ins.get(posIns).removePlage(ins.get(posIns).getPlages().get(posPl));
                                 }
-                                System.out.print("\nChoix :");
-                                int posPl = scan.nextInt()-1;
-                                ins.get(posIns).removePlage(ins.get(posIns).getPlages().get(posPl));
+                                case "3" -> {
+                                    System.out.println("Changer le souper : 1.oui - 2.non");
+                                    System.out.print("\nChoix :");
+                                    boolean bool = scan.nextInt() == 1 ? true : false;
+                                    ins.get(posIns).setSouper(bool);
+                                }
+                                case "4" -> {
+                                    System.out.println("Changer le logement : 1.oui - 2.non");
+                                    System.out.print("Choix :");
+                                    boolean bool = scan.nextInt() == 1 ? true : false;
+                                    ins.get(posIns).setSouper(bool);
+                                }
+                                default -> System.out.print(Dsg.re + Dsg.bo + "❌ CHOIX INVALIDE !" + Dsg.r);
                             }
-                            case "3" -> {
-                                System.out.println("Changer le souper : 1.oui - 2.non");
-                                System.out.print("\nChoix :");
-                                boolean bool = scan.nextInt() == 1 ? true : false;
-                                ins.get(posIns).setSouper(bool);
-                            }
-                            case "4" -> {
-                                System.out.println("Changer le logement : 1.oui - 2.non");
-                                System.out.print("Choix :");
-                                boolean bool = scan.nextInt() == 1 ? true : false;
-                                ins.get(posIns).setSouper(bool);
-                            }
-                            default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
                         }
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
-        }else{
-            System.out.println(Dsg.re+"❌ AUCUNE INSCRIPTION ENREGISTREE!"+ Dsg.r);
+        } else {
+            System.out.println(Dsg.re + "❌ AUCUNE INSCRIPTION ENREGISTREE!" + Dsg.r);
         }
     }
 
     private void editPlages(List<Plage> listPl, List<Participant> listP) {
-        if(!listPl.isEmpty()){
+        if (!listPl.isEmpty()) {
             boolean running = true;
-            while(running){
-                for(int i=0;i<listPl.size();i++){
-                    System.out.printf("%-4d %s\n",i+1,listPl.get(i).toString());
+            while (running) {
+                System.out.println("Selectionner la plage a modifier");
+                for (int i = 0; i < listPl.size(); i++) {
+                    System.out.printf("%-3d %s\n", i + 1, listPl.get(i));
                 }
-                try{
+                try {
                     System.out.print("\nChoix :");
-                    String choix =  scan.nextLine().toLowerCase();
+                    String choix = scan.nextLine().toLowerCase();
 
-                    if(choix.equals("q"))
+                    if (choix.equals("q"))
                         running = false;
-                    else{
-                        if(!choix.matches("\\d+"))
-                            throw new Exception(Dsg.re+"❌ LE CHOIX DOIT ETRE UN NUMERO!"+ Dsg.r);
-                        int posListPl = Integer.parseInt(choix)-1;
+                    else {
+                        if (!choix.matches("\\d+"))
+                            throw new Exception(Dsg.re + "❌ LE CHOIX DOIT ETRE UN NUMERO!" + Dsg.r);
+                        int posListPl = Integer.parseInt(choix) - 1;
 
-                        if(posListPl+1 > listPl.size())
-                            throw new Exception(Dsg.re+"❌ CHOIX INVALIDE!"+ Dsg.r);
+                        if (posListPl + 1 > listPl.size() || posListPl < 1)
+                            throw new Exception(Dsg.re + "❌ CHOIX INVALIDE!" + Dsg.r);
 
 
                         boolean inRunning = true;
-                        while(inRunning && running){
-                            System.out.printf("Plage selectionnée\n%s\n",listPl.get(posListPl).toString());
+                        while (inRunning && running) {
+                            System.out.printf("Plage selectionnée\n%s\n", listPl.get(posListPl));
 
                             sb.append("Que desirez vous modifier ?*").append("Q. Quitter.*").append("1. Nom.*").append("2. Jour.*")
                                     .append("3. Heure de début*").append("4. Heure de fin.*").append("4. Animateur.*");
 
-                            System.out.print(Tableau.displayInbox("",sb));
+                            System.out.print(Tableau.displayInbox("", sb));
                             sb.setLength(0);
 
                             System.out.print("\nChoix :");
-    //                        int inChoix =  scan.nextInt();
-    //                        Scanner newInput = new Scanner(System.in);
+                            //                        int inChoix =  scan.nextInt();
+                            //                        Scanner newInput = new Scanner(System.in);
                             String inChoix = scan.nextLine().toLowerCase();
 
 
-                            switch (inChoix){
+                            switch (inChoix) {
                                 case "q" -> inRunning = false;
                                 case "1" -> {
                                     System.out.print("Nouveau nom : ");
                                     String nom = scan.nextLine();
-                                    if(!nom.equalsIgnoreCase("q"))
+                                    if (!nom.equalsIgnoreCase("q"))
                                         listPl.get(posListPl).setNom(nom);
                                 }
                                 case "2" -> {
                                     System.out.print("Nouveau Jour : ");
                                     String jour = scan.nextLine();
-                                    if(!jour.equalsIgnoreCase("q"))
+                                    if (!jour.equalsIgnoreCase("q"))
                                         listPl.get(posListPl).setJour(jour);
                                 }
                                 case "3" -> {
                                     System.out.print("Nouveau heure de début : ");
                                     String hd = scan.nextLine();
-                                    if(!hd.equalsIgnoreCase("q"))
+                                    if (!hd.equalsIgnoreCase("q"))
                                         listPl.get(posListPl).setHeureDebut(hd);
                                 }
                                 case "4" -> {
                                     System.out.print("Nouveau heure de fin : ");
                                     String hf = scan.nextLine();
-                                    if(!hf.equalsIgnoreCase("q"))
+                                    if (!hf.equalsIgnoreCase("q"))
                                         listPl.get(posListPl).setHeureFin(hf);
                                 }
                                 case "5" -> {
                                     System.out.print("Nouveau animateur : ");
                                     for (int i = 0; i < listP.size(); i++) {
-                                        System.out.printf("%-4d %s\n",i+1,listP.get(i).toString());
+                                        System.out.printf("%-4d %s\n", i + 1, listP.get(i));
                                     }
                                     System.out.println("\nChoix :");
                                     String posParti = scan.nextLine();
-                                    if(!posParti.equalsIgnoreCase("q"))
+                                    if (!posParti.equalsIgnoreCase("q"))
                                         listPl.get(posListPl).setAnimateur(
-                                        listP.get(Integer.parseInt(posParti)));
+                                                listP.get(Integer.parseInt(posParti)));
                                 }
-                                default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
+                                default -> System.out.print(Dsg.re + Dsg.bo + "❌ CHOIX INVALIDE !" + Dsg.r);
                             }
                         }
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
-        }else {
-            System.out.println(Dsg.re+"❌ AUCUNE PLAGES ENREGISTREE!"+ Dsg.r);
+        } else {
+            System.out.println(Dsg.re + "❌ AUCUNE PLAGES ENREGISTREE!" + Dsg.r);
         }
     }
 
     public void editParticipant(List<Participant> listP) {
-        if(!listP.isEmpty()){
+        if (!listP.isEmpty()) {
             boolean running = true;
-            while(running){
-                for(int i=0;i<listP.size();i++){
-                    System.out.printf("%-4d %s\n",i+1,listP.get(i).toString());
+            while (running) {
+                System.out.println("Selectionner le participant a modifier");
+                for (int i = 0; i < listP.size(); i++) {
+                    System.out.printf("%-3d %s\n", i + 1, listP.get(i));
                 }
-                try{
+                try {
                     System.out.print("\nChoix :");
-                    String choix =  scan.nextLine();
+                    String choix = scan.nextLine();
 
-                    if(choix.equalsIgnoreCase("q"))
+                    if (choix.equalsIgnoreCase("q") || !choix.matches("\\d+"))
                         running = false;
-                    else{
-                        if(!choix.matches("\\d+"))
-                            throw new Exception(Dsg.re+"❌ LE CHOIX DOIT ETRE UN NUMERO!"+ Dsg.r);
-                        int posListPar = Integer.parseInt(choix)-1;
+                    else {
+                        if (!choix.matches("\\d+"))
+                            throw new Exception(Dsg.re + "❌ LE CHOIX DOIT ETRE UN NUMERO!" + Dsg.r);
+                        int posListPar = Integer.parseInt(choix) - 1;
 
-                        if(posListPar+1 > listP.size())
-                            throw new Exception(Dsg.re+"❌ CHOIX INVALIDE!"+ Dsg.r);
+                        if (posListPar + 1 > listP.size() || posListPar < 1)
+                            throw new Exception(Dsg.re + "❌ CHOIX INVALIDE!" + Dsg.r);
 
                         boolean inRunning = true;
-                        while(inRunning && running){
-                            System.out.printf("Participan selectionnée\n%s\n",listP.get(posListPar).toString());
+                        while (inRunning && running) {
+                            System.out.printf("Participan selectionnée\n%s\n", listP.get(posListPar));
 
                             sb.append("Que desirez vous modifier ?*").append("0. Quitter.*").append("1. Nom.*")
-                            .append("2. Prenom.*").append("3. Club*").append("4. Type.*");
+                                    .append("2. Prenom.*").append("3. Club*").append("4. Type.*");
 
-                            System.out.println(Tableau.displayInbox("",sb));
+                            System.out.println(Tableau.displayInbox("", sb));
                             sb.setLength(0);
 
                             System.out.print("\nChoix :");
-                            int inChoix =  scan.nextInt();
+                            int inChoix = scan.nextInt();
                             Scanner newInput = new Scanner(System.in);
 
-                            switch (inChoix){
+                            switch (inChoix) {
                                 case 0 -> inRunning = false;
                                 case 1 -> {
                                     System.out.print("Nouveau nom : ");
@@ -341,98 +381,103 @@ public class StageService implements Serializable {
                                 }
                                 case 4 -> {
                                     System.out.print("Nouveau type : ");
-    //                                listP.get(posListPar).setType(ETypeParticipant.
-    //                                        valueOf(newInput.nextLine().toUpperCase()));
+                                    //                                listP.get(posListPar).setType(ETypeParticipant.
+                                    //                                        valueOf(newInput.nextLine().toUpperCase()));
                                 }
-                                default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
+                                default -> System.out.print(Dsg.re + Dsg.bo + "❌ CHOIX INVALIDE !" + Dsg.r);
                             }
                         }
                     }
 
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
-        }else {
-            System.out.println(Dsg.re+"❌ AUCUN PARTICIPANT ENREGISTREE!"+ Dsg.r);
+        } else {
+            System.out.println(Dsg.re + "❌ AUCUN PARTICIPANT ENREGISTREE!" + Dsg.r);
         }
     }
 
     //function qui modifie un tarif existant
-    private void editTarifs(HashMap<Integer,Tarif> dbTarifs) {
-        if(dbTarifs != null)
-        {
+    private void editTarifs(HashMap<Integer, Tarif> dbTarifs) {
+        if (dbTarifs != null) {
             boolean running = true;
-            while(running)
-            {
-                System.out.println("Selectionner un tarif");
-                for(Tarif tarif : dbTarifs.values()){
+            while (running) {
+                System.out.println("Selectionner le tarif a modifier");
+                for (Tarif tarif : dbTarifs.values()) {
                     System.out.println(tarif.toString());
                 }
 
                 System.out.print("Choix :");
                 String choix = scan.nextLine().toLowerCase();
 
-                if(choix.equalsIgnoreCase("q"))
+                if (choix.equalsIgnoreCase("q") || !choix.matches("\\d+"))
                     running = false;
-
-                boolean inRunning = true;
-                while(inRunning && running){
+                else {
+                    int posTar = Integer.parseInt(choix);
                     Tarif selectedT = dbTarifs.get(Integer.parseInt(choix));
-                    System.out.printf("Tarif selectionné\n%s",selectedT.toString());
-                    sb.append("Que desirez vous modifier ?*").append("Q. Quitter.*").append("1. Prix plage.*")
-                    .append("2. Prix souper.*").append("3. Prix logement.*").append("4. Prix full.*");
-                    System.out.print(Tableau.displayInbox("",sb));
-                    sb.setLength(0);
+                    boolean inRunning = true;
+                    while (inRunning && running) {
 
-                    System.out.print("\nChoix :");
-                    choix = scan.nextLine().toLowerCase();
+                        if (selectedT != null) {
+                            System.out.printf("Tarif selectionné\n%s", selectedT);
+                            sb.append("Que desirez vous modifier ?*").append("Q. Quitter.*").append("1. Prix plage.*")
+                                    .append("2. Prix souper.*").append("3. Prix logement.*").append("4. Prix full.*");
+                            System.out.print(Tableau.displayInbox("", sb));
+                            sb.setLength(0);
 
-                    if(choix.equalsIgnoreCase("q"))
-                        inRunning = false;
-                    else{
-                        switch (choix){
-                            case "1"->{
-                                System.out.print("Nouveau prix plage : ");
-                                String input = scan.nextLine();
-                                if(input.equalsIgnoreCase("q"))
-                                    inRunning = false;
-                                else
-                                    selectedT.setpPlage(Double.parseDouble(input));
+                            System.out.print("\nChoix :");
+                            choix = scan.nextLine().toLowerCase();
+
+                            if (choix.equalsIgnoreCase("q") || !choix.matches("\\d+"))
+                                inRunning = false;
+                            else {
+                                switch (choix) {
+                                    case "1" -> {
+                                        System.out.print("Nouveau prix plage : ");
+                                        String input = scan.nextLine();
+                                        if (input.equalsIgnoreCase("q"))
+                                            inRunning = false;
+                                        else
+                                            selectedT.setpPlage(Double.parseDouble(input));
+                                    }
+                                    case "2" -> {
+                                        System.out.print("Nouveau prix souper : ");
+                                        String input = scan.nextLine();
+                                        if (input.equalsIgnoreCase("q"))
+                                            inRunning = false;
+                                        else
+                                            selectedT.setpSouper(Double.parseDouble(input));
+                                    }
+                                    case "3" -> {
+                                        System.out.print("Nouveau prix logement: ");
+                                        String input = scan.nextLine();
+                                        if (input.equalsIgnoreCase("q"))
+                                            inRunning = false;
+                                        else
+                                            selectedT.setpLogement(Double.parseDouble(input));
+                                    }
+                                    case "4" -> {
+                                        System.out.print("Nouveau prix full: ");
+                                        String input = scan.nextLine();
+                                        if (input.equalsIgnoreCase("q"))
+                                            inRunning = false;
+                                        else
+                                            selectedT.setpFullPlages(Double.parseDouble(input));
+                                    }
+                                    default -> System.out.print(Dsg.re + Dsg.bo + "❌ CHOIX INVALIDE !" + Dsg.r);
+                                }
                             }
-                            case "2"->{
-                                System.out.print("Nouveau prix souper : ");
-                                String input = scan.nextLine();
-                                if(input.equalsIgnoreCase("q"))
-                                    inRunning = false;
-                                else
-                                    selectedT.setpSouper(Double.parseDouble(input));
-                            }
-                            case "3"->{
-                                System.out.print("Nouveau prix logement: ");
-                                String input = scan.nextLine();
-                                if(input.equalsIgnoreCase("q"))
-                                    inRunning = false;
-                                else
-                                    selectedT.setpLogement(Double.parseDouble(input));
-                            }
-                            case "4"->{
-                                System.out.print("Nouveau prix full: ");
-                                String input = scan.nextLine();
-                                if(input.equalsIgnoreCase("q"))
-                                    inRunning = false;
-                                else
-                                    selectedT.setpFullPlages(Double.parseDouble(input));
-                            }
-                            default-> System.out.print(Dsg.re+Dsg.bo+"❌ CHOIX INVALIDE !"+ Dsg.r);
+                        } else {
+                            System.out.println(Dsg.re + Dsg.bo + "❌ CHOIX INVALIDE !" + Dsg.r);
+                            inRunning = false;
                         }
-                    }
 
+                    }
                 }
             }
-        }else
-        {
-            System.out.println(Dsg.re+"❌ AUCUN TARIF DEFINIE!"+ Dsg.r);
+        } else {
+            System.out.println(Dsg.re + "❌ AUCUN TARIF DEFINIE!" + Dsg.r);
         }
     }
 

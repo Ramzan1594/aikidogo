@@ -16,6 +16,7 @@ public class ConsoleUi {
     private StageService service;
     private StageData data;
     private Scanner scanner;
+    private String stageLoaded;
 
     public ConsoleUi(StageService service, StageData data) {
         this.service = service;
@@ -27,34 +28,35 @@ public class ConsoleUi {
         boolean running = true;
 
         while (running) {
-            System.out.println(Dsg.pu +"\n┌────────────────────────────────────────┐\n" +
+            stageLoaded = data.getNbrTarifs() != 0 && data.getParticipants().size() != 0 && data.getPlages().size() != 0 ? Dsg.pu:Dsg.r;
+            System.out.println(stageLoaded +"\n┌────────────────────────────────────────┐\n" +
                                          "│============  MENU AIKIDOGO  ===========│"+ Dsg.r);
-            System.out.println(Dsg.pu+"├────────────────────────────────────────┤"+Dsg.r);
-            System.out.println(Dsg.pu+"│"+ Dsg.re +"0. Quitter"+ Dsg.pu +"                              │");
-            System.out.println("│"+ Dsg.gr +"1. Charger fichier"+ Dsg.pu+"                      │");
-            System.out.println("│"+ Dsg.gr +"2. ENREGISTRE LES DONNEES"+ Dsg.pu +"               │");
+            System.out.println(stageLoaded+"├────────────────────────────────────────┤"+Dsg.r);
+            System.out.println(stageLoaded+"│"+ Dsg.re +"Q. Quitter"+ stageLoaded +"                              │");
+            System.out.println("│"+ Dsg.gr +"1. Charger fichier"+ stageLoaded+"                      │");
+            System.out.println("│"+ Dsg.gr +"2. ENREGISTRE LES DONNEES"+ stageLoaded +"               │");
             System.out.println("├────────────────────────────────────────┤");
 
-            System.out.println("│"+Dsg.wh+"3. Définir les tarifs"+ Dsg.pu+"                   │");
-            System.out.println("│"+Dsg.wh+"4. Ajouter un participant"+ Dsg.pu+"               │");
-            System.out.println("│"+ Dsg.wh +"5. Créer une plage"+ Dsg.pu+"                      │");
-            System.out.println("│"+ Dsg.wh +"6. Affecter un animateur"+ Dsg.pu+"                │");
-            System.out.println("│"+ Dsg.wh +"7. Inscrire un participant"+ Dsg.pu+"              │");
+            System.out.println("│"+Dsg.wh+"3. Définir les tarifs"+ stageLoaded+"                   │");
+            System.out.println("│"+Dsg.wh+"4. Ajouter un participant"+ stageLoaded+"               │");
+            System.out.println("│"+ Dsg.wh +"5. Créer une plage"+ stageLoaded+"                      │");
+            System.out.println("│"+ Dsg.wh +"6. Affecter un animateur"+ stageLoaded+"                │");
+            System.out.println("│"+ Dsg.wh +"7. Inscrire un participant"+ stageLoaded+"              │");
             System.out.println("├────────────────────────────────────────┤");
-            System.out.println("│"+ Dsg.wh +"a. Calculer le prix d'un participant"+ Dsg.pu+"    │");
-            System.out.println("│"+ Dsg.wh +"z. Afficher plages"+ Dsg.pu+"                      │");
-            System.out.println("│"+ Dsg.wh +"e. Afficher participants/inscriptions"+ Dsg.pu+"   │");
-            System.out.println("│"+ Dsg.wh +"r. Afficher tarifs"+ Dsg.pu+"                      │");
+            System.out.println("│"+ Dsg.wh +"a. Calculer le prix d'un participant"+ stageLoaded+"    │");
+            System.out.println("│"+ Dsg.wh +"z. Afficher plages"+ stageLoaded+"                      │");
+            System.out.println("│"+ Dsg.wh +"e. Afficher participants/inscriptions"+ stageLoaded+"   │");
+            System.out.println("│"+ Dsg.wh +"r. Afficher tarifs"+ stageLoaded+"                      │");
             System.out.println("├────────────────────────────────────────┤");
-            System.out.println(Dsg.pu+"│"+ Dsg.wh +"f. Menu modification"+ Dsg.pu +"                    │");
-            System.out.println(Dsg.pu+"│"+ Dsg.wh +"d. Menu supression"+ Dsg.pu +"                      │");
-            System.out.println(Dsg.pu +"└────────────────────────────────────────┘"+ Dsg.r);
+            System.out.println(stageLoaded+"│"+ Dsg.wh +"f. Menu modification"+ stageLoaded +"                    │");
+            System.out.println(stageLoaded+"│"+ Dsg.wh +"d. Menu supression"+ stageLoaded +"                      │");
+            System.out.println(stageLoaded +"└────────────────────────────────────────┘"+ Dsg.r);
 
             System.out.print("\nChoix : ");
             String choix = scanner.nextLine().toLowerCase();
 
             switch (choix) {
-                case "0" -> running = false;
+                case "q" -> running = false;
                 case "1" -> loadFile();
                 case "2" -> saveStageData();
 
@@ -176,7 +178,7 @@ public class ConsoleUi {
 
         Participant p = new Participant(club, email, tel,prenom, nom);
         data.getParticipants().add(p);
-        System.out.printf(Dsg.re +"✅ PARTICIPANT AJOUTE : %s"+ Dsg.r, p.toString());
+        System.out.printf(Dsg.re +"✅ PARTICIPANT AJOUTE : %s"+ Dsg.r, p);
     }
 
     private void creerPlage() {
@@ -203,7 +205,7 @@ public class ConsoleUi {
 
         Plage p = new Plage(nom, jour, debut, fin);
         data.getPlages().add(p);
-        System.out.printf(Dsg.re +"✅ PLAGE CREE : %s"+ Dsg.r, p.toString());
+        System.out.printf(Dsg.re +"✅ PLAGE CREE : %s"+ Dsg.r, p);
     }
 
     private void inscrireParticipant() {
@@ -316,7 +318,7 @@ public class ConsoleUi {
         }
 
         double prix = service.calculerPrix(insc, insc.getTarif(), data.getPlages().size());
-        System.out.printf(Dsg.re +"PRIX TOTAL POUR %s : %.2f€"+ Dsg.r, p.toString() , prix);
+        System.out.printf(Dsg.re +"PRIX TOTAL POUR %s : %.2f€"+ Dsg.r, p, prix);
     }
 
     private Participant choisirParticipant() {
@@ -331,7 +333,7 @@ public class ConsoleUi {
             System.out.println("Choisissez un participant :");
             System.out.println(Dsg.re + "Q. Quitter\n" + Dsg.r);
             for (int i = 0; i < data.getParticipants().size(); i++) {
-                System.out.println((i + 1) + ". " + data.getParticipants().get(i));
+                System.out.printf("%-3d %s\n",i+1,data.getParticipants().get(i));
             }
 
             System.out.print("\nChoix :");
@@ -381,7 +383,7 @@ public class ConsoleUi {
         }else{
             System.out.println("Choisissez une plage :");
             for (int i = 0; i < data.getPlages().size(); i++) {
-                System.out.println((i + 1) + ". " + data.getPlages().get(i));
+                System.out.printf("%-3d %s\n",i+1,data.getPlages().get(i));
             }
 
             System.out.print("\nChoix :");
@@ -398,13 +400,5 @@ public class ConsoleUi {
             plage = data.getPlages().get(num - 1);
         }
         return plage;
-    }
-    public void test(){
-        System.out.println("┌──────┬──────┐");
-        System.out.println("│      │      │");
-        System.out.println("├──────┼──────┤");
-        System.out.println("│      │      │");
-        System.out.println("│      │      │");
-        System.out.println("└──────┴──────┘");
     }
 }
