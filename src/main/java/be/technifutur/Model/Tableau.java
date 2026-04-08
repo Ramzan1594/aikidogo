@@ -9,7 +9,8 @@ public class Tableau {
 
     //sb est une string avec * comme separation de ligne
     //tabLen est la longeur du string le plus long pour qu on puisse adapter le tableau
-    public static String displayInbox(String color,StringBuilder sb){
+    public static String
+    displayInbox(String color,StringBuilder sb){
         String ret="";
         String theString = sb.toString();
         String[] parts = theString.split("\\*");

@@ -23,6 +23,7 @@ public abstract class Dsg {
     public static final String bo = "\u001B[1m";
     public static final String un = "\u001B[4m";
     public static final String it = "\u001B[3m";
+    public static final String st = "\u001B[9m";
 
 
 }

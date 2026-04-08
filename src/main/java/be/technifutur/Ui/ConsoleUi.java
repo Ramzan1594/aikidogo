@@ -17,6 +17,7 @@ public class ConsoleUi {
     private StageData data;
     private Scanner scanner;
     private String stageLoaded;
+    private String stroke;
 
     public ConsoleUi(StageService service, StageData data) {
         this.service = service;
@@ -29,6 +30,7 @@ public class ConsoleUi {
 
         while (running) {
             stageLoaded = data.getNbrTarifs() != 0 && data.getParticipants().size() != 0 && data.getPlages().size() != 0 ? Dsg.pu:Dsg.r;
+//            stroke = data.getParticipants().size() > 0? "":Dsg.st;
             System.out.println(stageLoaded +"\n┌────────────────────────────────────────┐\n" +
                                          "│============  MENU AIKIDOGO  ===========│"+ Dsg.r);
             System.out.println(stageLoaded+"├────────────────────────────────────────┤"+Dsg.r);
@@ -40,8 +42,8 @@ public class ConsoleUi {
             System.out.println("│"+Dsg.wh+"3. Définir les tarifs"+ stageLoaded+"                   │");
             System.out.println("│"+Dsg.wh+"4. Ajouter un participant"+ stageLoaded+"               │");
             System.out.println("│"+ Dsg.wh +"5. Créer une plage"+ stageLoaded+"                      │");
-            System.out.println("│"+ Dsg.wh +"6. Affecter un animateur"+ stageLoaded+"                │");
-            System.out.println("│"+ Dsg.wh +"7. Inscrire un participant"+ stageLoaded+"              │");
+            System.out.println("│"+ Dsg.wh + "6. Affecter un animateur"+ stageLoaded+"                │");
+            System.out.println("│"+ Dsg.wh + "7. Inscrire un participant"+ stageLoaded+"              │");
             System.out.println("├────────────────────────────────────────┤");
             System.out.println("│"+ Dsg.wh +"a. Calculer le prix d'un participant"+ stageLoaded+"    │");
             System.out.println("│"+ Dsg.wh +"z. Afficher plages"+ stageLoaded+"                      │");
@@ -358,14 +360,14 @@ public class ConsoleUi {
 
     private void afficherInscriptions() {
         System.out.println(Dsg.re +"\n=== Participants ==="+ Dsg.r);
-        System.out.println(String.format("%-10s %-10s %-10s","Nom", "Prénom", "Club"));
-        System.out.println("─────────────────────────────────────────────");
+        System.out.println(String.format("%-8s %-8s %-1s","Nom", "Prénom", "Club"));
+        System.out.println("───────────────────────");
         for (Participant p : data.getParticipants()) {
             System.out.println(p.toString());
         }
 
         System.out.println(Dsg.re +"\n=== Inscriptions ==="+ Dsg.r);
-        System.out.println(String.format("Nom%-7s Prénom%-4s Club%-6s Type%-7s 🍔Souper/🏦Logement%-5s 🥋Animateur%-4s " +
+        System.out.println(String.format("Nom%-5s Prénom%-2s Club%-4s Tarif%-7s 🍔Souper/🏦Logement%-5s 🥋Animateur%-4s " +
                 "🕛 Plages%-1s","","", "", "", "","",""));
         System.out.println("──────────────────────────────────────────────────────────────────────────────────────" +
                 "────────────────────────────────");

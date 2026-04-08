@@ -39,7 +39,7 @@ public class Participant implements Serializable {
     public String toString() {
 //        return nom + " " + prenom + " (club:" +  clubName +" status:" + type.toString() + ")";
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-10s %-10s %-10s",nom, prenom, clubName));
+        sb.append(String.format("%-8s %-8s %-8s",nom, prenom, clubName));
         return sb.toString();
     }
 
